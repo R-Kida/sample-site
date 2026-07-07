@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="株式会社サンプルは、革新的なソリューションで社会に貢献するプロフェッショナル集団です。">
+<meta name="keywords" content="サンプル,コンサルティング,IT,デザイン,東京">
+<meta name="author" content="株式会社サンプル">
+<meta property="og:title" content="株式会社サンプル | 革新と信頼のプロフェッショナル">
+<meta property="og:description" content="IT・コンサルティング・デザインの分野で社会に貢献する株式会社サンプルの公式サイトです。">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<title>株式会社サンプル | 革新と信頼のプロフェッショナル</title>
+<style>
+:root {
+  --primary: #1a1a2e;
+  --accent: #e94560;
+  --accent2: #0f3460;
+  --text: #333;
+  --muted: #888;
+  --bg: #f9f9f9;
+  --border: #e0e0e0;
+  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  --radius: 8px;
+  --hh: 70px;
+  --font: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--text);background:var(--bg);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%;display:block}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.sec{padding:100px 0}
+.sec-ttl{text-align:center;margin-bottom:60px}
+.sec-ttl h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:var(--primary);letter-spacing:.06em;display:inline-block;position:relative}
+.sec-ttl h2::after{content:'';display:block;width:50px;height:3px;background:var(--accent);margin:14px auto 0;border-radius:2px}
+.sec-ttl p{margin-top:16px;color:var(--muted);font-size:.95rem;letter-spacing:.04em}
+.fade{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fade.show{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+
+/* Header */
+.hd{position:fixed;top:0;left:0;width:100%;height:var(--hh);z-index:100;transition:background .3s,box-shadow .3s}
+.hd.sc{background:rgba(26,26,46,.96);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.hd-in{display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 32px}
+.logo{color:#fff;font-size:1.3rem;font-weight:700;letter-spacing:.08em;cursor:pointer}
+.logo span{color:var(--accent)}
+.pc-nav{display:flex;gap:36px}
+.pc-nav a{color:rgba(255,255,255,.85);font-size:.88rem;letter-spacing:.08em;position:relative;padding-bottom:4px;transition:color .3s}
+.pc-nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s}
+.pc-nav a:hover{color:#fff}
+.pc-nav a:hover::after{width:100%}
+
+/* Hamburger */
+.hbg{
+  display:none;
+  width:44px;height:44px;
+  background:transparent;border:none;
+  cursor:pointer;padding:8px;
+  position:relative;z-index:9999;
+}
+.hbg-inner{
+  display:flex;flex-direction:column;justify-content:space-between;
+  width:28px;height:20px;pointer-events:none;
+}
+.hbg-bar{
+  display:block;width:100%;height:2px;
+  background:#fff;border-radius:2px;
+}
+
+/* Mobile overlay */
+#mnav{
+  display:none;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(26,26,46,.97);
+  z-index:9998;
+  flex-direction:column;align-items:center;justify-content:center;gap:40px;
+}
+#mnav a{color:#fff;font-size:1.5rem;letter-spacing:.12em}
+.mnav-close{
+  position:absolute;top:20px;right:20px;
+  width:48px;height:48px;background:none;border:none;cursor:pointer;
+}
+.mnav-close::before,.mnav-close::after{
+  content:'';position:absolute;top:50%;left:50%;
+  width:28px;height:2px;background:#fff;border-radius:2px;
+}
+.mnav-close::before{transform:translate(-50%,-50%) rotate(45deg)}
+.mnav-close::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+/* Hero */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--primary)}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#1a1a2e 100%);will-change:transform}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-ptc{position:absolute;inset:0;overflow:hidden}
+.hero-ptc span{position:absolute;display:block;border-radius:50%;background:rgba(233,69,96,.15);animation:ptc linear infinite}
+@keyframes ptc{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.hero-ct{position:relative;text-align:center;color:#fff;padding:0 20px}
+.hero-sub{font-size:.8rem;letter-spacing:.25em;color:var(--accent);margin-bottom:20px;opacity:0;animation:fup .8s .3s forwards}
+.hero-h1{font-size:clamp(2.4rem,6vw,5rem);font-weight:900;line-height:1.15;letter-spacing:.04em;opacity:0;animation:fup .8s .5s forwards}
+.hero-h1 em{font-style:normal;color:var(--accent)}
+.hero-p{margin-top:24px;font-size:clamp(.95rem,1.8vw,1.15rem);color:rgba(255,255,255,.7);line-height:1.8;letter-spacing:.06em;opacity:0;animation:fup .8s .7s forwards}
+.hero-btn{margin-top:44px;opacity:0;animation:fup .8s .9s forwards}
+.hero-btn a{display:inline-block;padding:16px 44px;border:2px solid var(--accent);color:#fff;font-size:.9rem;letter-spacing:.15em;position:relative;overflow:hidden;transition:color .3s}
+.hero-btn a::before{content:'';position:absolute;inset:0;background:var(--accent);transform:translateX(-101%);transition:transform .3s;z-index:-1}
+.hero-btn a:hover::before{transform:none}
+.hero-sc{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:.7rem;letter-spacing:.15em}
+.hero-sc-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.5));animation:scl 1.6s ease-in-out infinite}
+@keyframes scl{0%,100%{opacity:.3;transform:scaleY(.5) translateY(-10px)}50%{opacity:1;transform:scaleY(1) translateY(0)}}
+@keyframes fup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* Greeting */
+.greet{background:#fff}
+.greet-in{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.greet-img{position:relative;aspect-ratio:4/5;border-radius:var(--radius);background:linear-gradient(135deg,#1a1a2e,#0f3460);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.15);font-size:2rem;letter-spacing:.2em}
+.greet-img-deco{position:absolute;bottom:-20px;right:-20px;width:160px;height:160px;border:3px solid var(--accent);border-radius:var(--radius);z-index:-1}
+.greet-txt h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;color:var(--primary);line-height:1.4;margin-bottom:24px}
+.greet-txt h2 span{color:var(--accent)}
+.greet-txt p{color:#555;line-height:2;font-size:.95rem;margin-bottom:16px}
+.greet-sig{margin-top:32px;font-size:.85rem;color:var(--muted)}
+.greet-sig strong{display:block;font-size:1.1rem;color:var(--primary);margin-top:4px}
+
+/* Profile */
+.prof{background:var(--bg)}
+.prof-in{display:grid;grid-template-columns:300px 1fr;gap:60px;align-items:start}
+.prof-card{background:#fff;border-radius:var(--radius);padding:40px 32px;text-align:center;box-shadow:var(--shadow)}
+.prof-av{width:120px;height:120px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:3rem;color:#fff;font-weight:700}
+.prof-name{font-size:1.3rem;font-weight:700;color:var(--primary)}
+.prof-role{font-size:.82rem;color:var(--accent);letter-spacing:.1em;margin-top:6px}
+.prof-sns{display:flex;gap:12px;justify-content:center;margin-top:20px}
+.prof-sns a{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:background .3s,transform .3s}
+.prof-sns a:hover{background:var(--accent);transform:scale(1.15)}
+.prof-ct h3{font-size:1.6rem;color:var(--primary);margin-bottom:20px}
+.prof-ct p{color:#555;line-height:2;margin-bottom:16px;font-size:.95rem}
+.prof-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.prof-tag{background:var(--primary);color:#fff;font-size:.78rem;padding:6px 14px;border-radius:20px;letter-spacing:.06em}
+
+/* Services */
+.svcs{background:var(--primary)}
+.svcs .sec-ttl h2{color:#fff}
+.svcs .sec-ttl p{color:rgba(255,255,255,.5)}
+.svcs .sec-ttl h2::after{background:var(--accent)}
+.svcs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.svc-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:44px 32px;text-align:center;transition:background .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.svc-card:hover{background:rgba(255,255,255,.07);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.svc-ico{width:72px;height:72px;border-radius:50%;margin:0 auto 24px;background:rgba(233,69,96,.15);border:1px solid rgba(233,69,96,.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.svc-card h3{font-size:1.1rem;color:#fff;font-weight:700;margin-bottom:16px;letter-spacing:.06em}
+.svc-card p{color:rgba(255,255,255,.55);font-size:.88rem;line-height:1.85}
+.svc-n{position:absolute;top:20px;right:24px;font-size:3rem;font-weight:900;color:rgba(255,255,255,.04)}
+
+/* Company */
+.comp{background:#fff}
+.comp table{width:100%;border-collapse:collapse}
+.comp th,.comp td{padding:20px 24px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left;font-size:.93rem;line-height:1.8}
+.comp th{width:200px;color:var(--muted);font-weight:400;letter-spacing:.06em}
+.comp tr:last-child th,.comp tr:last-child td{border-bottom:none}
+
+/* Map */
+.map-s{background:var(--bg)}
+.map-box{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);height:420px;background:linear-gradient(135deg,#d0d0d8,#b8b8c8);display:flex;align-items:center;justify-content:center}
+.map-ph{text-align:center;color:rgba(0,0,0,.3)}
+.map-ph svg{width:60px;height:60px;margin:0 auto 16px}
+.map-ph p{font-size:.9rem;letter-spacing:.08em}
+.map-info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.map-item{background:#fff;border-radius:var(--radius);padding:28px 24px;box-shadow:var(--shadow);text-align:center}
+.map-item .ico{font-size:1.8rem;margin-bottom:12px}
+.map-item h4{font-size:.8rem;color:var(--muted);letter-spacing:.1em;margin-bottom:8px}
+.map-item p{font-size:.92rem;color:var(--primary);font-weight:500;line-height:1.7}
+
+/* Footer */
+.ft{background:var(--primary);color:rgba(255,255,255,.6);padding:60px 0 30px}
+.ft-in{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ft-logo{font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.08em;margin-bottom:16px;cursor:pointer}
+.ft-logo span{color:var(--accent)}
+.ft-desc{font-size:.85rem;line-height:1.9}
+.ft-nav h4{color:#fff;font-size:.82rem;letter-spacing:.15em;margin-bottom:20px}
+.ft-nav ul{display:flex;flex-direction:column;gap:12px}
+.ft-nav a{font-size:.84rem;transition:color .3s}
+.ft-nav a:hover{color:var(--accent)}
+.ft-bt{display:flex;align-items:center;justify-content:space-between;padding-top:28px;flex-wrap:wrap;gap:12px}
+.ft-copy{font-size:.78rem}
+.ft-pol a{font-size:.78rem;color:rgba(255,255,255,.4);margin-left:20px;transition:color .3s}
+.ft-pol a:hover{color:var(--accent)}
+
+/* SNS fixed (PC) */
+.sns-fix{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column}
+.sns-fix a{display:flex;align-items:center;justify-content:center;width:46px;height:46px;color:#fff;font-size:.9rem;font-weight:700;transition:width .3s}
+.sns-fix a:nth-child(1){background:#1877f3}
+.sns-fix a:nth-child(2){background:#1da1f2}
+.sns-fix a:nth-child(3){background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.sns-fix a:nth-child(4){background:#25d366}
+.sns-fix a:hover{width:60px}
+
+/* Page top */
+.pg-top{position:fixed;bottom:32px;right:32px;z-index:200;width:50px;height:50px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(233,69,96,.4);opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s,background .3s}
+.pg-top.show{opacity:1;transform:none}
+.pg-top:hover{background:#c73550}
+.pg-top svg{width:20px;height:20px;pointer-events:none}
+
+/* SNS mobile bar */
+.sns-mob{display:none;position:fixed;bottom:0;left:0;width:100%;z-index:200;background:var(--primary);border-top:1px solid rgba(255,255,255,.1)}
+.sns-mob a{flex:1;display:flex;align-items:center;justify-content:center;height:50px;color:#fff;font-size:.72rem;font-weight:700;flex-direction:column;gap:3px}
+.sns-mob a:nth-child(1){background:rgba(24,119,243,.8)}
+.sns-mob a:nth-child(2){background:rgba(29,161,242,.8)}
+.sns-mob a:nth-child(3){background:rgba(220,39,67,.7)}
+.sns-mob a:nth-child(4){background:rgba(37,211,102,.7)}
+.sns-mob a .si{font-size:1.1rem;line-height:1}
+.sns-mob a .sl{font-size:.58rem}
+
+/* Responsive */
+@media(max-width:1024px){
+  .svcs-grid{grid-template-columns:repeat(2,1fr)}
+  .ft-in{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  :root{--hh:60px}
+  .sec{padding:70px 0}
+  .pc-nav{display:none}
+  .hbg{display:block}
+  .greet-in{grid-template-columns:1fr;gap:40px}
+  .greet-img{aspect-ratio:16/9}
+  .prof-in{grid-template-columns:1fr}
+  .svcs-grid{grid-template-columns:1fr}
+  .comp th{width:110px}
+  .map-info{grid-template-columns:1fr}
+  .ft-in{grid-template-columns:1fr;gap:36px}
+  .ft-bt{flex-direction:column;text-align:center}
+  .sns-fix{display:none}
+  .sns-mob{display:flex}
+  .pg-top{bottom:70px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <div class="logo" id="logo"><span>S</span>AMPLE</div>
+    <nav class="pc-nav">
+      <a href="#greet">ご挨拶</a>
+      <a href="#prof">自己紹介</a>
+      <a href="#svcs">業務案内</a>
+      <a href="#comp">会社概要</a>
+      <a href="#map">アクセス</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="メニュー">
+      <div class="hbg-inner">
+        <span class="hbg-bar"></span>
+        <span class="hbg-bar"></span>
+        <span class="hbg-bar"></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div id="mnav">
+  <button class="mnav-close" id="mnav-close" aria-label="閉じる"></button>
+  <a href="#greet" class="mnav-a">ご挨拶</a>
+  <a href="#prof" class="mnav-a">自己紹介</a>
+  <a href="#svcs" class="mnav-a">業務案内</a>
+  <a href="#comp" class="mnav-a">会社概要</a>
+  <a href="#map" class="mnav-a">アクセス</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ptc" id="hero-ptc"></div>
+  <div class="hero-ct">
+    <p class="hero-sub">INNOVATION &amp; TRUST</p>
+    <h1 class="hero-h1">革新と信頼で<br><em>未来を切り拓く</em></h1>
+    <p class="hero-p">私たちは、テクノロジーとクリエイティビティの力で<br>お客様のビジネスをより高いステージへ導きます。</p>
+    <div class="hero-btn"><a href="#greet">もっと詳しく</a></div>
+  </div>
+  <div class="hero-sc"><div class="hero-sc-line"></div><span>SCROLL</span></div>
+</section>
+
+<!-- Greeting -->
+<section class="greet sec" id="greet">
+  <div class="wrap">
+    <div class="greet-in">
+      <div class="greet-img fade">PHOTO<div class="greet-img-deco"></div></div>
+      <div class="greet-txt fade d1">
+        <h2>お客様の<span>挑戦</span>に、<br>共に向き合います。</h2>
+        <p>この度は、株式会社サンプルのウェブサイトをご覧いただき、誠にありがとうございます。私たちは創業以来、「革新と信頼」を経営理念として掲げ、お客様のビジネス課題に真摯に向き合ってまいりました。</p>
+        <p>変化の激しいビジネス環境の中で、デジタルトランスフォーメーションへの対応はもはや必須の課題となっています。私たちはIT技術とコンサルティングの専門知識を融合させ、お客様一人ひとりに寄り添ったソリューションをご提供します。</p>
+        <p>これからも、皆様とともに成長し、社会に貢献できる企業であり続けることを約束いたします。</p>
+        <div class="greet-sig">代表取締役社長<strong>山田 太郎</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Profile -->
+<section class="prof sec" id="prof">
+  <div class="wrap">
+    <div class="sec-ttl fade"><h2>自己紹介</h2><p>ABOUT ME</p></div>
+    <div class="prof-in">
+      <div class="prof-card fade">
+        <div class="prof-av">Y</div>
+        <div class="prof-name">山田 太郎</div>
+        <div class="prof-role">CEO / Founder</div>
+        <div class="prof-sns">
+          <a href="#">f</a><a href="#">𝕏</a><a href="#">◎</a><a href="#">in</a>
+        </div>
+      </div>
+      <div class="prof-ct fade d1">
+        <h3>プロフィール</h3>
+        <p>東京大学工学部卒業後、大手IT企業にてシステム開発・プロジェクトマネジメントに従事。約10年の経験を経て、2015年に株式会社サンプルを創業。</p>
+        <p>現在は中小企業から大企業まで多岐にわたるクライアントのDX推進パートナーとして、戦略立案から実装まで一貫したサポートを提供しています。</p>
+        <p>プライベートでは2児の父。休日は子供とアウトドアを楽しむことが何よりの癒しです。</p>
+        <div class="prof-tags">
+          <span class="prof-tag">ITコンサルティング</span>
+          <span class="prof-tag">DX推進</span>
+          <span class="prof-tag">プロジェクト管理</span>
+          <span class="prof-tag">Webデザイン</span>
+          <span class="prof-tag">マーケティング</span>
+          <span class="prof-tag">UI/UX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="svcs sec" id="svcs">
+  <div class="wrap">
+    <div class="sec-ttl fade"><h2>業務案内</h2><p>OUR SERVICES</p></div>
+    <div class="svcs-grid">
+      <div class="svc-card fade"><span class="svc-n">01</span><div class="svc-ico">💻</div><h3>ITコンサルティング</h3><p>お客様のビジネス課題をヒアリングし、最適なIT戦略を策定。要件定義からシステム導入まで一貫してサポートします。</p></div>
+      <div class="svc-card fade d1"><span class="svc-n">02</span><div class="svc-ico">🎨</div><h3>Webデザイン・制作</h3><p>ユーザー体験を重視したUI/UXデザインとフルスクラッチ開発で、ブランド価値を高めるウェブサイトを制作します。</p></div>
+      <div class="svc-card fade d2"><span class="svc-n">03</span><div class="svc-ico">📊</div><h3>デジタルマーケティング</h3><p>SEO・SNS運用・広告運用を組み合わせた統合的なマーケティング施策で集客・売上向上を実現します。</p></div>
+      <div class="svc-card fade"><span class="svc-n">04</span><div class="svc-ico">🔒</div><h3>セキュリティ対策</h3><p>リスクアセスメントから対策実装・運用監視まで、企業の情報資産を守るソリューションを提供します。</p></div>
+      <div class="svc-card fade d1"><span class="svc-n">05</span><div class="svc-ico">☁️</div><h3>クラウド導入支援</h3><p>AWS・Azure・GCPを活用したクラウド移行計画の策定と実装支援。コスト最適化と可用性向上を実現します。</p></div>
+      <div class="svc-card fade d2"><span class="svc-n">06</span><div class="svc-ico">📱</div><h3>アプリ開発</h3><p>iOS・Androidアプリからクロスプラットフォーム開発まで。企画から運用まで一貫して担当します。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Company -->
+<section class="comp sec" id="comp">
+  <div class="wrap">
+    <div class="sec-ttl fade"><h2>会社概要</h2><p>COMPANY PROFILE</p></div>
+    <div class="fade">
+      <table>
+        <tr><th>会社名</th><td>株式会社サンプル</td></tr>
+        <tr><th>英語表記</th><td>Sample Corporation</td></tr>
+        <tr><th>設立</th><td>2015年4月1日</td></tr>
+        <tr><th>代表者</th><td>代表取締役社長　山田 太郎</td></tr>
+        <tr><th>資本金</th><td>5,000万円</td></tr>
+        <tr><th>従業員数</th><td>42名（2024年4月現在）</td></tr>
+        <tr><th>所在地</th><td>〒100-0001 東京都千代田区千代田1-1-1 サンプルビル8F</td></tr>
+        <tr><th>電話番号</th><td>03-0000-0000</td></tr>
+        <tr><th>メール</th><td>info@sample.co.jp</td></tr>
+        <tr><th>事業内容</th><td>ITコンサルティング / Webデザイン・制作 / デジタルマーケティング / システム開発</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Map -->
+<section class="map-s sec" id="map">
+  <div class="wrap">
+    <div class="sec-ttl fade"><h2>アクセス</h2><p>ACCESS</p></div>
+    <div class="map-box fade">
+      <div class="map-ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5 2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5z"/></svg>
+        <p>ここにGoogleマップが入ります</p>
+      </div>
+    </div>
+    <div class="map-info fade d1">
+      <div class="map-item"><div class="ico">🚃</div><h4>電車でお越しの方</h4><p>東京メトロ千代田線<br>「千代田駅」より徒歩3分</p></div>
+      <div class="map-item"><div class="ico">🚗</div><h4>お車でお越しの方</h4><p>首都高速千代田ICより<br>約5分・近隣に駐車場あり</p></div>
+      <div class="map-item"><div class="ico">🕐</div><h4>営業時間</h4><p>平日 9:00〜18:00<br>土日祝：定休日</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-logo" id="ft-logo"><span>S</span>AMPLE</div>
+        <p class="ft-desc">革新と信頼のプロフェッショナルとして、お客様のビジネス成長を全力でサポートします。</p>
+      </div>
+      <nav class="ft-nav">
+        <h4>MENU</h4>
+        <ul>
+          <li><a href="#greet">ご挨拶</a></li>
+          <li><a href="#prof">自己紹介</a></li>
+          <li><a href="#svcs">業務案内</a></li>
+          <li><a href="#comp">会社概要</a></li>
+          <li><a href="#map">アクセス</a></li>
+        </ul>
+      </nav>
+      <nav class="ft-nav">
+        <h4>CONTACT</h4>
+        <ul>
+          <li><a href="#">お問い合わせ</a></li>
+          <li><a href="#">採用情報</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="ft-bt">
+      <p class="ft-copy">&copy; 2024 Sample Corporation. All Rights Reserved.</p>
+      <div class="ft-pol"><a href="#">プライバシーポリシー</a><a href="#">利用規約</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- SNS PC -->
+<div class="sns-fix">
+  <a href="#">f</a><a href="#">𝕏</a><a href="#">◎</a><a href="#">L</a>
+</div>
+
+<!-- SNS Mobile -->
+<div class="sns-mob">
+  <a href="#"><span class="si">f</span><span class="sl">Facebook</span></a>
+  <a href="#"><span class="si">𝕏</span><span class="sl">Twitter</span></a>
+  <a href="#"><span class="si">◎</span><span class="sl">Instagram</span></a>
+  <a href="#"><span class="si">L</span><span class="sl">LINE</span></a>
+</div>
+
+<!-- Page Top -->
+<button class="pg-top" id="pg-top" aria-label="ページトップへ">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+// Particles
+(function(){
+  var c=document.getElementById('hero-ptc');
+  for(var i=0;i<18;i++){
+    var s=document.createElement('span');
+    var sz=Math.random()*80+20;
+    s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;animation-duration:'+(Math.random()*12+8)+'s;animation-delay:'+(Math.random()*10)+'s;';
+    c.appendChild(s);
+  }
+})();
+
+// Header scroll
+var hd=document.getElementById('hd');
+window.addEventListener('scroll',function(){hd.classList.toggle('sc',window.scrollY>60);},{passive:true});
+
+// Parallax
+var hbg2=document.getElementById('hero-bg');
+window.addEventListener('scroll',function(){
+  if(window.scrollY<window.innerHeight)hbg2.style.transform='translateY('+(window.scrollY*.35)+'px)';
+},{passive:true});
+
+// ===== HAMBURGER =====
+var hbgBtn = document.getElementById('hbg');
+var mnav   = document.getElementById('mnav');
+var mclose = document.getElementById('mnav-close');
+
+function openNav(){
+  mnav.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeNav(){
+  mnav.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+hbgBtn.onclick = openNav;
+mclose.onclick = closeNav;
+document.querySelectorAll('.mnav-a').forEach(function(a){
+  a.onclick = closeNav;
+});
+// =====================
+
+// Scroll fade
+var fades=document.querySelectorAll('.fade');
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('show');});
+},{threshold:0.15});
+fades.forEach(function(el){io.observe(el);});
+
+// Page top
+var pt=document.getElementById('pg-top');
+window.addEventListener('scroll',function(){pt.classList.toggle('show',window.scrollY>400);},{passive:true});
+pt.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+
+// Logo
+document.getElementById('logo').onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+document.getElementById('ft-logo').onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+</script>
+</body>
+</html>

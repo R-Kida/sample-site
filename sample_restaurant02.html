@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>茶縁 CHAEN | 日本茶カフェ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;
+  --cream2:#F2EDE4;
+  --matcha:#4F7C5F;
+  --matcha-l:#7BA98A;
+  --matcha-ll:#C8DDD0;
+  --hojicha:#9B7355;
+  --hojicha-l:#C4A882;
+  --hojicha-ll:#EAD9C5;
+  --wagashi:#C97A6E;
+  --wagashi-l:#E8B4A8;
+  --dark:#2C2417;
+  --gray:#7A6E63;
+  --radius:20px;
+  --shadow:0 4px 28px rgba(44,36,23,.09);
+  --shadow-lg:0 10px 48px rgba(44,36,23,.16);
+}
+html{scroll-behavior:smooth;font-family:'Hiragino Mincho ProN','Yu Mincho',Georgia,serif}
+body{background:var(--cream);color:var(--dark);overflow-x:hidden}
+
+/* ── SEIGAIHA PATTERN (青海波) ── */
+.pattern-bg{
+  background-color:var(--cream2);
+  background-image:
+    radial-gradient(ellipse at 50% 100%,transparent 60%,var(--matcha-ll) 61%,var(--matcha-ll) 62%,transparent 63%),
+    radial-gradient(ellipse at 0% 100%,transparent 60%,var(--matcha-ll) 61%,var(--matcha-ll) 62%,transparent 63%),
+    radial-gradient(ellipse at 100% 100%,transparent 60%,var(--matcha-ll) 61%,var(--matcha-ll) 62%,transparent 63%);
+  background-size:40px 20px;
+  background-position:0 0,20px 0,-20px 0;
+  opacity:.3;
+}
+
+/* ── SNS HEADER ── */
+#sns-header{
+  background:var(--dark);padding:9px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+#sns-header .tagline{color:var(--hojicha-l);font-size:12px;letter-spacing:2px}
+#sns-header .sns-icons{display:flex;gap:8px}
+#sns-header a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;color:#fff;font-size:14px;
+  text-decoration:none;transition:transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+#sns-header a::after{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:2px;background:var(--hojicha-l);border-radius:2px;transition:width .3s;
+}
+#sns-header a:hover::after{width:80%}
+#sns-header a:hover{transform:scale(1.12);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.tw{background:#1DA1F2}.ig{background:#E4405F}.fb{background:#4267B2}.yt{background:#FF0000}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,247,242,.96);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--matcha-ll);padding:0 5%;transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:var(--shadow)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{text-decoration:none;display:flex;align-items:baseline;gap:8px}
+.logo-ja{font-size:22px;font-weight:700;color:var(--matcha);letter-spacing:4px}
+.logo-en{font-size:11px;color:var(--hojicha);letter-spacing:3px;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{
+  text-decoration:none;color:var(--gray);font-size:13px;letter-spacing:1px;
+  padding:4px 0;border-bottom:1.5px solid transparent;transition:.2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--matcha);border-color:var(--matcha)}
+.nav-cta{
+  background:var(--matcha);color:#fff;border:none;border-radius:28px;
+  padding:9px 22px;font-size:13px;letter-spacing:1px;cursor:pointer;
+  text-decoration:none;transition:.2s;
+}
+.nav-cta:hover{background:#3d6349;box-shadow:0 4px 16px rgba(79,124,95,.35)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px}
+.hamburger span{width:22px;height:1.5px;background:var(--dark);border-radius:2px;transition:.3s}
+
+/* ── HERO ── */
+#hero{
+  min-height:94vh;display:flex;align-items:center;
+  background:linear-gradient(160deg,var(--cream) 0%,var(--cream2) 60%,var(--matcha-ll) 100%);
+  padding:80px 5%;position:relative;overflow:hidden;
+}
+/* 和柄の背景装飾 */
+#hero::before{
+  content:'';position:absolute;right:-120px;top:-120px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,var(--matcha-ll) 0%,transparent 70%);opacity:.5;
+}
+#hero::after{
+  content:'';position:absolute;left:-80px;bottom:-80px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,var(--hojicha-ll) 0%,transparent 70%);opacity:.6;
+}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:60px;max-width:1100px;width:100%;margin:0 auto;position:relative;z-index:1}
+.hero-text{flex:1;opacity:0;transform:translateY(30px);animation:fadeUp .9s .2s forwards}
+.hero-season{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--hojicha-ll);color:var(--hojicha);
+  font-size:12px;letter-spacing:2px;padding:5px 16px;border-radius:20px;margin-bottom:20px;
+}
+.hero-title{font-size:clamp(36px,6vw,68px);font-weight:700;line-height:1.15;margin-bottom:8px;letter-spacing:2px}
+.hero-title em{font-style:normal;color:var(--matcha)}
+.hero-catch{font-size:clamp(13px,1.5vw,16px);color:var(--hojicha);letter-spacing:3px;margin-bottom:20px}
+.hero-sub{font-size:clamp(14px,1.5vw,16px);color:var(--gray);line-height:2;margin-bottom:36px;max-width:460px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--matcha);color:#fff;border:none;border-radius:32px;
+  padding:14px 32px;font-size:15px;letter-spacing:1px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:.25s;animation:pulse-green 2s infinite;
+}
+.btn-primary:hover{background:#3d6349;transform:scale(1.05);box-shadow:0 6px 28px rgba(79,124,95,.4);animation:none}
+.btn-secondary{
+  background:transparent;color:var(--hojicha);border:1.5px solid var(--hojicha);border-radius:32px;
+  padding:14px 32px;font-size:15px;letter-spacing:1px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.25s;
+}
+.btn-secondary:hover{background:var(--hojicha);color:#fff}
+
+/* ヒーロービジュアル */
+.hero-visual-wrap{flex:0 0 400px;position:relative;opacity:0;animation:scaleIn .9s .4s forwards}
+.hero-img-placeholder{
+  width:380px;height:380px;border-radius:50%;
+  background:linear-gradient(135deg,var(--matcha) 0%,var(--matcha-l) 50%,var(--hojicha-l) 100%);
+  display:flex;align-items:center;justify-content:center;font-size:120px;
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  /* ★ 実装時: background-imageで画像差し替え */
+}
+.hero-img-placeholder::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 60%);
+}
+.hero-img-placeholder .img-label{
+  position:absolute;bottom:20px;left:0;right:0;text-align:center;
+  font-size:11px;color:rgba(255,255,255,.7);letter-spacing:2px;
+  font-family:system-ui;
+}
+.hero-deco-ring{
+  position:absolute;inset:-20px;border-radius:50%;
+  border:1.5px solid var(--matcha-l);opacity:.4;
+  animation:spin 25s linear infinite;
+}
+.hero-deco-ring2{
+  position:absolute;inset:-40px;border-radius:50%;
+  border:1px dashed var(--hojicha-l);opacity:.3;
+  animation:spin 40s linear infinite reverse;
+}
+/* 浮遊する和素材アイコン */
+.float-icon{
+  position:absolute;font-size:28px;animation:float 4s ease-in-out infinite;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.15));
+}
+.fi1{top:10%;right:-10%;animation-delay:0s}
+.fi2{bottom:15%;left:-8%;animation-delay:1.2s}
+.fi3{top:60%;right:-14%;animation-delay:2.1s}
+
+/* ── SECTION COMMON ── */
+.section-head{text-align:center;margin-bottom:64px}
+.section-label{
+  display:inline-block;color:var(--hojicha);font-size:11px;font-weight:400;
+  letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;
+  font-family:system-ui;
+}
+.section-title{font-size:clamp(26px,4vw,42px);font-weight:700;line-height:1.3;letter-spacing:2px}
+.section-sub{color:var(--gray);font-size:15px;margin-top:12px;line-height:1.8;letter-spacing:.5px}
+.kamon{color:var(--matcha);font-size:20px;margin:0 12px;opacity:.5}
+
+/* ── CONCEPT ── */
+#concept{padding:100px 5%;background:var(--cream)}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1040px;margin:0 auto}
+.concept-card{
+  background:#fff;border-radius:var(--radius);padding:40px 32px;
+  box-shadow:var(--shadow);text-align:center;border-top:3px solid transparent;
+  opacity:0;transform:translateY(40px);transition:transform .5s,box-shadow .3s,opacity .5s;
+}
+.concept-card.c1{border-color:var(--matcha)}
+.concept-card.c2{border-color:var(--hojicha)}
+.concept-card.c3{border-color:var(--wagashi)}
+.concept-card.visible{opacity:1;transform:translateY(0)}
+.concept-card:hover{transform:translateY(-6px) !important;box-shadow:var(--shadow-lg)}
+.concept-icon{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+  font-size:32px;transition:transform .3s;
+}
+.c1 .concept-icon{background:var(--matcha-ll)}
+.c2 .concept-icon{background:var(--hojicha-ll)}
+.c3 .concept-icon{background:var(--wagashi-l);opacity:.8}
+.concept-card:hover .concept-icon{transform:rotate(15deg) scale(1.2)}
+.concept-card h3{font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:1px}
+.concept-card p{color:var(--gray);font-size:14px;line-height:1.9}
+
+/* ── OWNER ── */
+#owner{padding:100px 5%;background:var(--cream2);position:relative;overflow:hidden}
+#owner::before{
+  content:'茶';position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+  font-size:320px;font-weight:700;color:var(--matcha-ll);opacity:.25;line-height:1;
+  pointer-events:none;
+}
+.owner-inner{display:flex;align-items:center;gap:72px;max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.owner-img-wrap{flex:0 0 300px;position:relative}
+.owner-img{
+  width:300px;height:360px;border-radius:140px 140px 20px 20px;
+  background:linear-gradient(170deg,var(--matcha-l) 0%,var(--hojicha-l) 100%);
+  display:flex;align-items:center;justify-content:center;font-size:80px;
+  box-shadow:var(--shadow-lg);overflow:hidden;position:relative;
+  /* ★ 実装時: background-imageで店主写真に差し替え */
+}
+.owner-img .img-label{
+  position:absolute;bottom:16px;font-size:11px;color:rgba(255,255,255,.7);
+  letter-spacing:2px;font-family:system-ui;
+}
+.owner-deco{
+  position:absolute;bottom:-16px;right:-16px;
+  width:120px;height:120px;border-radius:50%;
+  background:var(--wagashi-l);opacity:.3;z-index:-1;
+}
+.owner-text{flex:1;opacity:0;transform:translateX(40px);transition:.7s}
+.owner-text.visible{opacity:1;transform:translateX(0)}
+.owner-label{
+  font-size:11px;letter-spacing:4px;color:var(--hojicha);margin-bottom:12px;
+  font-family:system-ui;text-transform:uppercase;
+}
+.owner-text h2{font-size:clamp(24px,3.5vw,38px);font-weight:700;margin-bottom:6px;letter-spacing:2px}
+.owner-name{font-size:14px;color:var(--hojicha);letter-spacing:2px;margin-bottom:24px;font-family:system-ui}
+.owner-text p{color:var(--gray);font-size:15px;line-height:2;margin-bottom:16px}
+.owner-sig{
+  margin-top:28px;font-size:22px;color:var(--matcha);letter-spacing:4px;
+  border-top:1px solid var(--matcha-ll);padding-top:20px;display:inline-block;
+}
+.owner-img-wrap{opacity:0;transform:translateX(-40px);transition:.7s}
+.owner-img-wrap.visible{opacity:1;transform:translateX(0)}
+
+/* ── MENU ── */
+#menu{padding:100px 5%;background:var(--cream)}
+.menu-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:48px;flex-wrap:wrap}
+.tab-btn{
+  padding:8px 24px;border-radius:24px;border:1.5px solid var(--matcha-ll);
+  background:transparent;color:var(--gray);font-size:13px;letter-spacing:1px;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.tab-btn.active,.tab-btn:hover{background:var(--matcha);color:#fff;border-color:var(--matcha)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;max-width:1080px;margin:0 auto}
+.menu-card{
+  border-radius:var(--radius);overflow:hidden;background:#fff;
+  box-shadow:var(--shadow);
+  transition:transform .45s,box-shadow .3s,opacity .3s;
+  opacity:0;transform:translateY(30px);
+}
+.menu-card.visible{opacity:1;transform:translateY(0)}
+.menu-card.hidden{display:none}
+.menu-card:hover{transform:translateY(-6px) !important;box-shadow:var(--shadow-lg)}
+.menu-img{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  font-size:64px;position:relative;overflow:hidden;
+  /* ★ 実装時: background-imageで料理写真に差し替え */
+}
+.menu-img.matcha-bg{background:linear-gradient(135deg,var(--matcha-ll),var(--matcha-l))}
+.menu-img.hojicha-bg{background:linear-gradient(135deg,var(--hojicha-ll),var(--hojicha-l))}
+.menu-img.wagashi-bg{background:linear-gradient(135deg,var(--wagashi-l),#f5cfc8)}
+.menu-img.cream-bg{background:linear-gradient(135deg,var(--cream2),var(--hojicha-ll))}
+.menu-img .img-label{
+  position:absolute;bottom:0;left:0;right:0;text-align:center;
+  font-size:10px;color:rgba(255,255,255,.7);letter-spacing:2px;
+  padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.2));
+  font-family:system-ui;
+}
+.menu-badge{
+  position:absolute;top:12px;left:12px;
+  font-size:10px;font-weight:400;padding:3px 12px;border-radius:20px;letter-spacing:1px;
+  font-family:system-ui;
+}
+.badge-m{background:var(--matcha);color:#fff}
+.badge-h{background:var(--hojicha);color:#fff}
+.badge-w{background:var(--wagashi);color:#fff}
+.badge-s{background:var(--dark);color:#fff}
+.menu-body{padding:20px 22px}
+.menu-body h3{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:1px}
+.menu-body p{color:var(--gray);font-size:13px;line-height:1.8;margin-bottom:14px}
+.menu-footer{display:flex;align-items:center;justify-content:space-between}
+.menu-price{font-size:20px;font-weight:700;color:var(--matcha)}
+.menu-price span{font-size:12px;font-weight:400;color:var(--gray)}
+.menu-tag{font-size:11px;color:var(--hojicha);background:var(--hojicha-ll);padding:3px 10px;border-radius:12px;font-family:system-ui}
+
+/* ── SEASONAL BANNER ── */
+.seasonal-banner{
+  max-width:1080px;margin:48px auto 0;
+  background:linear-gradient(120deg,var(--matcha) 0%,var(--matcha-l) 50%,var(--hojicha-l) 100%);
+  border-radius:var(--radius);padding:32px 40px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  box-shadow:var(--shadow-lg);
+}
+.seasonal-banner h3{font-size:22px;font-weight:700;letter-spacing:2px;margin-bottom:4px}
+.seasonal-banner p{font-size:14px;opacity:.85;line-height:1.7;letter-spacing:.5px}
+.btn-banner{
+  background:#fff;color:var(--matcha);border:none;border-radius:28px;
+  padding:12px 28px;font-size:14px;letter-spacing:1px;cursor:pointer;
+  white-space:nowrap;transition:.2s;text-decoration:none;display:inline-block;
+}
+.btn-banner:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+
+/* ── INFO ── */
+#info{padding:100px 5%;background:var(--cream2)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1080px;margin:0 auto 48px}
+.info-card{
+  background:var(--cream);border-radius:var(--radius);padding:32px 24px;
+  box-shadow:var(--shadow);text-align:center;
+  opacity:0;transform:translateY(30px);transition:.5s;
+}
+.info-card.visible{opacity:1;transform:translateY(0)}
+.info-icon{font-size:36px;margin-bottom:12px}
+.info-card h3{font-size:11px;font-weight:400;color:var(--hojicha);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;font-family:system-ui}
+.info-card p{color:var(--gray);font-size:14px;line-height:1.9}
+.info-card a{color:var(--matcha);text-decoration:none;font-weight:700;font-size:18px}
+.map-placeholder{
+  max-width:1080px;margin:0 auto;background:var(--matcha-ll);border-radius:var(--radius);
+  height:240px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;box-shadow:var(--shadow);
+  /* ★ 実装時: Google Maps iframeに差し替え */
+}
+.map-placeholder .map-icon{font-size:48px}
+.map-placeholder p{font-size:12px;color:var(--matcha);letter-spacing:2px;font-family:system-ui}
+
+/* ── REVIEWS ── */
+#reviews{padding:100px 5%;background:var(--cream)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;max-width:1060px;margin:0 auto}
+.review-card{
+  background:#fff;border-radius:var(--radius);padding:32px;
+  box-shadow:var(--shadow);position:relative;
+  opacity:0;transform:translateX(40px);transition:.5s;
+}
+.review-card.visible{opacity:1;transform:translateX(0)}
+.review-card::before{
+  content:'〝';position:absolute;top:10px;left:20px;
+  font-size:60px;color:var(--matcha-ll);line-height:1;
+}
+.review-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.review-avatar{
+  width:52px;height:52px;border-radius:50%;background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  flex-shrink:0;border:2px solid var(--matcha-ll);
+  /* ★ 実装時: background-imageで顔写真に差し替え */
+}
+.review-meta h4{font-size:14px;font-weight:700;letter-spacing:1px}
+.review-meta span{font-size:11px;color:var(--gray);font-family:system-ui}
+.stars{color:var(--hojicha-l);font-size:13px;margin-bottom:10px;letter-spacing:2px}
+.review-text{color:var(--gray);font-size:14px;line-height:2}
+.review-tag{
+  display:inline-block;margin-top:14px;font-size:11px;
+  color:var(--matcha);background:var(--matcha-ll);
+  padding:3px 12px;border-radius:12px;font-family:system-ui;letter-spacing:1px;
+}
+
+/* ── CONTACT ── */
+#contact{
+  padding:100px 5%;
+  background:linear-gradient(150deg,var(--dark) 0%,#3a2e1e 50%,#2c2417 100%);
+  color:#fff;text-align:center;position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'縁';position:absolute;left:-60px;bottom:-60px;
+  font-size:360px;font-weight:700;color:rgba(255,255,255,.03);
+  pointer-events:none;line-height:1;
+}
+#contact .section-label{color:var(--hojicha-l)}
+#contact .section-title{color:#fff}
+#contact .section-sub{color:rgba(255,255,255,.65)}
+.contact-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:32px 0 48px}
+.btn-white{
+  background:#fff;color:var(--matcha);border:none;border-radius:32px;
+  padding:13px 32px;font-size:14px;letter-spacing:1px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  transition:.2s;
+}
+.btn-white:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.btn-line{
+  background:#06C755;color:#fff;border:none;border-radius:32px;
+  padding:13px 32px;font-size:14px;letter-spacing:1px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:.2s;
+}
+.btn-line:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(6,199,85,.4)}
+.contact-form{
+  max-width:520px;margin:0 auto;display:grid;gap:12px;text-align:left;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.contact-form input,.contact-form textarea,.contact-form select{
+  width:100%;padding:13px 18px;border:1.5px solid rgba(255,255,255,.15);border-radius:12px;
+  background:rgba(255,255,255,.08);color:#fff;font-size:14px;
+  outline:none;transition:.2s;font-family:inherit;letter-spacing:.5px;
+}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,.4)}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{border-color:var(--matcha-l);background:rgba(255,255,255,.12)}
+.contact-form select option{background:#2c2417;color:#fff}
+.contact-form textarea{resize:vertical;min-height:90px}
+.btn-submit{
+  background:var(--matcha);color:#fff;border:none;border-radius:32px;
+  padding:14px;font-size:15px;letter-spacing:2px;cursor:pointer;
+  width:100%;transition:.2s;font-family:inherit;
+}
+.btn-submit:hover{background:var(--matcha-l);transform:scale(1.02);box-shadow:0 6px 24px rgba(79,124,95,.4)}
+.divider{
+  display:flex;align-items:center;gap:16px;margin:40px 0 28px;
+  color:rgba(255,255,255,.3);font-size:12px;letter-spacing:2px;font-family:system-ui;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+
+/* ── SNS FOOTER ── */
+.sns-footer{display:flex;justify-content:center;gap:12px;margin-top:48px;flex-wrap:wrap}
+.sns-footer a{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:24px;
+  color:rgba(255,255,255,.8);text-decoration:none;font-size:13px;letter-spacing:1px;
+  border:1px solid rgba(255,255,255,.15);transition:.2s;font-family:system-ui;
+}
+.sns-footer a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4);transform:scale(1.05)}
+
+/* ── FOOTER ── */
+footer{background:#1a1108;color:rgba(255,255,255,.4);padding:40px 5%;text-align:center}
+.footer-logo-ja{font-size:24px;font-weight:700;color:var(--matcha-l);letter-spacing:4px}
+.footer-logo-en{font-size:11px;letter-spacing:4px;color:var(--hojicha-l);margin-top:4px;font-family:system-ui}
+footer p{font-size:12px;margin-top:16px;line-height:1.8;letter-spacing:.5px;font-family:system-ui}
+
+/* ── SCROLL TOP ── */
+#scroll-top{
+  position:fixed;bottom:24px;right:24px;width:46px;height:46px;border-radius:50%;
+  background:var(--matcha);color:#fff;border:none;cursor:pointer;font-size:16px;
+  box-shadow:var(--shadow);opacity:0;transform:translateY(16px);
+  transition:opacity .3s,transform .3s;z-index:99;
+}
+#scroll-top.show{opacity:1;transform:translateY(0)}
+#scroll-top:hover{background:#3d6349;transform:scale(1.1) !important}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{to{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse-green{
+  0%,100%{box-shadow:0 0 0 0 rgba(79,124,95,.4)}
+  50%{box-shadow:0 0 0 12px rgba(79,124,95,0)}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .owner-inner{flex-direction:column;text-align:center}
+  .owner-img-wrap{flex:none}
+  .owner-text{transform:none !important}
+  .owner-img-wrap{transform:none !important}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .nav-links.open{
+    display:flex;flex-direction:column;position:absolute;top:66px;left:0;right:0;
+    background:var(--cream);padding:16px 24px;gap:16px;box-shadow:var(--shadow);
+  }
+  .hamburger{display:flex}
+  .hero-inner{flex-direction:column;text-align:center;gap:40px}
+  .hero-btns{justify-content:center}
+  .hero-visual-wrap{flex:none}
+  .hero-img-placeholder{width:260px;height:260px;font-size:72px}
+  .hero-sub{margin:0 auto 36px}
+  .form-row{grid-template-columns:1fr}
+  #sns-header .tagline{display:none}
+  .seasonal-banner{flex-direction:column;text-align:center}
+  #contact::before{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- SNS HEADER -->
+<div id="sns-header">
+  <span class="tagline">〜 一服のやすらぎを、あなたに 〜</span>
+  <div class="sns-icons">
+    <a href="https://twitter.com/yourpage" target="_blank" class="tw" aria-label="X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.736-8.861L1.961 2.25h6.862l4.264 5.632 5.157-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://instagram.com/yourpage" target="_blank" class="ig" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://facebook.com/yourpage" target="_blank" class="fb" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://youtube.com/yourpage" target="_blank" class="yt" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <span class="logo-ja">茶縁</span>
+      <span class="logo-en">CHAEN</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#concept">こだわり</a></li>
+      <li><a href="#owner">店主より</a></li>
+      <li><a href="#menu">メニュー</a></li>
+      <li><a href="#info">店舗案内</a></li>
+      <li><a href="#reviews">口コミ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">ご予約</a>
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-season">🍃 今月のおすすめ ── 新茶フェア開催中</div>
+      <p class="hero-catch">静岡・宇治・京都産 一番摘み</p>
+      <h1 class="hero-title">日本茶と、<br><em>めぐる時間。</em></h1>
+      <p class="hero-sub">丁寧に淹れた一杯が、あなたの日常に<br>静かな豊かさをお届けします。<br>季節の和菓子とともに、どうぞ。</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">🍵 席を予約する</a>
+        <a href="#menu" class="btn-secondary">🍡 メニューを見る</a>
+      </div>
+    </div>
+    <div class="hero-visual-wrap">
+      <div class="hero-deco-ring"></div>
+      <div class="hero-deco-ring2"></div>
+      <div class="hero-img-placeholder">
+        🍵
+        <span class="img-label">★ 実装時に写真に差し替え</span>
+      </div>
+      <span class="float-icon fi1">🍡</span>
+      <span class="float-icon fi2">🌿</span>
+      <span class="float-icon fi3">🌸</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="section-head">
+    <div class="section-label">Our Commitment</div>
+    <h2 class="section-title"><span class="kamon">〈</span>三つのこだわり<span class="kamon">〉</span></h2>
+    <p class="section-sub">産地・道具・空間、すべてに誠実であること</p>
+  </div>
+  <div class="concept-grid">
+    <div class="concept-card c1">
+      <div class="concept-icon">🌿</div>
+      <h3>産地直送の茶葉</h3>
+      <p>静岡・宇治・鹿児島の信頼できる茶農家と直接契約。収穫後すぐに届く新鮮な茶葉だけを使用します。季節ごとに変わる産地の個性をお楽しみください。</p>
+    </div>
+    <div class="concept-card c2">
+      <div class="concept-icon">🫖</div>
+      <h3>器と温度へのこだわり</h3>
+      <p>お茶の種類によって湯温・浸出時間を一杯ずつ調整。急須は信楽・常滑の職人作。茶葉が最も輝く瞬間を、丁寧に引き出します。</p>
+    </div>
+    <div class="concept-card c3">
+      <div class="concept-icon">🍡</div>
+      <h3>和菓子職人との協働</h3>
+      <p>地元の老舗和菓子店と季節限定の創作和菓子を共同開発。お茶の味わいに寄り添う素材・甘さを追求した、ここでしか食べられない一皿です。</p>
+    </div>
+  </div>
+</section>
+
+<!-- OWNER -->
+<section id="owner">
+  <div class="owner-inner">
+    <div class="owner-img-wrap">
+      <div class="owner-img">
+        👨‍🍳
+        <span class="img-label">★ 実装時に店主写真に差し替え</span>
+      </div>
+      <div class="owner-deco"></div>
+    </div>
+    <div class="owner-text">
+      <div class="owner-label">Owner's Story</div>
+      <h2>茶と向き合う、<br>ということ。</h2>
+      <p class="owner-name">店主　田中 宗一（たなか そういち）</p>
+      <p>もともとは会社員でした。忙しない毎日の中で、祖母が淹れてくれた一杯の煎茶に救われたことがあります。何も言わず、ただ茶を前に置いてくれた。その静けさが忘れられなくて、気づいたら茶の道に入っていました。</p>
+      <p>修行は京都の老舗茶商で7年。産地巡りは年に2回欠かしません。お茶は農産物です。土、気候、人の手——すべてが一杯に宿っています。その背景をお伝えしながら、ただおいしく飲んでいただける場所を作りたかった。それが「茶縁」の原点です。</p>
+      <p>難しく考えなくて大丈夫です。「おいしい」と思えたなら、それが正解です。</p>
+      <div class="owner-sig">田中 宗一　拝</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-head">
+    <div class="section-label">Menu</div>
+    <h2 class="section-title"><span class="kamon">〈</span>季節のメニュー<span class="kamon">〉</span></h2>
+    <p class="section-sub">すべて一杯ずつ、丁寧にお出しします</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active">すべて</button>
+    <button class="tab-btn">煎茶・抹茶</button>
+    <button class="tab-btn">ほうじ茶</button>
+    <button class="tab-btn">和菓子セット</button>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card" data-category="煎茶・抹茶">
+      <div class="menu-img matcha-bg">
+        🍵
+        <div class="menu-badge badge-m">人気No.1</div>
+        <span class="img-label">★ 写真に差し替え</span>
+      </div>
+      <div class="menu-body">
+        <h3>特選 宇治抹茶</h3>
+        <p>宇治の老舗茶園から直送。石臼挽きの抹茶を80℃のお湯で丁寧に点てます。</p>
+        <div class="menu-footer">
+          <div class="menu-price">¥880 <span>（税込）</span></div>
+          <span class="menu-tag">煎茶・抹茶</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card" data-category="ほうじ茶">
+      <div class="menu-img hojicha-bg">
+        ☕
+        <div class="menu-badge badge-h">ほっこり</div>
+        <span class="img-label">★ 写真に差し替え</span>
+      </div>
+      <div class="menu-body">
+        <h3>深煎りほうじ茶ラテ</h3>
+        <p>自家焙煎のほうじ茶を低温抽出。国産オーツミルクとのハーモニーを楽しんで。</p>
+        <div class="menu-footer">
+          <div class="menu-price">¥780 <span>（税込）</span></div>
+          <span class="menu-tag">ほうじ茶</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card" data-category="和菓子セット">
+      <div class="menu-img wagashi-bg">
+        🍡
+        <div class="menu-badge badge-w">季節限定</div>
+        <span class="img-label">★ 写真に差し替え</span>
+      </div>
+      <div class="menu-body">
+        <h3>和菓子 三種盛り</h3>
+        <p>地元和菓子店との共同開発。上生菓子・道明寺・水まんじゅうの三種。季節により変わります。</p>
+        <div class="menu-footer">
+          <div class="menu-price">¥980 <span>（税込）</span></div>
+          <span class="menu-tag">和菓子セット</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card" data-category="和菓子セット">
+      <div class="menu-img cream-bg">
+        🍃
+        <div class="menu-badge badge-s">おすすめ</div>
+        <span class="img-label">★ 写真に差し替え</span>
+      </div>
+      <div class="menu-body">
+        <h3>茶縁セット（お茶＋和菓子）</h3>
+        <p>お好みのお茶一杯＋本日の和菓子一種。初めての方はまずこちらから。</p>
+        <div class="menu-footer">
+          <div class="menu-price">¥1,380 <span>（税込）</span></div>
+          <span class="menu-tag">セット</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="seasonal-banner">
+    <div>
+      <h3>🌱 新茶フェア ── 5月限定</h3>
+      <p>今年の一番摘み。静岡・川根産の生の香りをお楽しみください。<br>期間中はテイスティングセットもご用意しています。</p>
+    </div>
+    <a href="#contact" class="btn-banner">詳しく見る →</a>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="section-head">
+    <div class="section-label">Store Information</div>
+    <h2 class="section-title"><span class="kamon">〈</span>店舗案内<span class="kamon">〉</span></h2>
+    <p class="section-sub">路地の奥、静かな一角にお待ちしております</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">📍</div>
+      <h3>所在地</h3>
+      <p>京都府京都市東山区<br>○○町12-3<br>（清水寺より徒歩8分）</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🕐</div>
+      <h3>営業時間</h3>
+      <p>10:00 〜 18:00<br>（L.O. 17:30）<br>定休日：水曜・木曜</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">📞</div>
+      <h3>お電話</h3>
+      <p><a href="tel:0751234567">075-123-4567</a><br><small style="color:var(--gray);font-size:12px;font-family:system-ui">受付 10:00〜17:00</small></p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🚌</div>
+      <h3>アクセス</h3>
+      <p>市バス「東山安井」停<br>下車徒歩3分<br>京阪「祇園四条」より徒歩15分</p>
+    </div>
+  </div>
+  <div class="map-placeholder">
+    <div class="map-icon">📍</div>
+    <p>★ 実装時に Google Maps を埋め込み</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-head">
+    <div class="section-label">Guest Reviews</div>
+    <h2 class="section-title"><span class="kamon">〈</span>お客様の声<span class="kamon">〉</span></h2>
+    <p class="section-sub">茶縁で過ごしたひとときを、皆さまからいただきました</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-head">
+        <div class="review-avatar">👤</div>
+        <div class="review-meta"><h4>山田 あかり</h4><span>2025年4月 来店</span></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">観光の疲れを癒しに立ち寄りました。店主さんがお茶の産地について丁寧に説明してくださって、ただ飲むだけじゃなく背景まで楽しめる場所でした。ほうじ茶ラテが特においしかったです。</p>
+      <span class="review-tag">ほうじ茶ラテ</span>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="review-avatar">👤</div>
+        <div class="review-meta"><h4>佐藤 けんたろう</h4><span>2025年3月 来店</span></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">茶縁セットを注文しました。和菓子との組み合わせが絶妙で、「ああ、これが日本のおやつ文化か」と改めて感動。木の温もりある空間もとても居心地よくて、2時間近くいてしまいました。</p>
+      <span class="review-tag">茶縁セット</span>
+    </div>
+    <div class="review-card">
+      <div class="review-head">
+        <div class="review-avatar">👤</div>
+        <div class="review-meta"><h4>林 さつき</h4><span>2025年5月 来店</span></div>
+      </div>
+      <div class="stars">★★★★☆</div>
+      <p class="review-text">新茶フェアで初めて訪問。飲み比べセットで川根と宇治の違いが分かって面白かったです。日常でお茶をもっと意識して飲もうと思えるきっかけになりました。また必ず来ます！</p>
+      <span class="review-tag">新茶テイスティング</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-head">
+    <div class="section-label">Reservation & Contact</div>
+    <h2 class="section-title">ご予約・お問い合わせ</h2>
+    <p class="section-sub">席数に限りがございます。お気軽にご連絡ください</br>Formspree(登録無料・月50件受信迄)対応なので登録後ユニークキー書き換えで稼働</p>
+  </div>
+  <div class="contact-btns">
+    <a href="tel:0751234567" class="btn-white">📞 お電話で予約</a>
+    <a href="https://line.me/yourpage" target="_blank" class="btn-line">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.070 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      LINEで予約
+    </a>
+  </div>
+  <div class="divider">または フォームからお問い合わせ</div>
+  <form class="contact-form" id="contact-form" action="https://formspree.io/f/ここにFormspreeのIDを貼る" method="POST">
+    <div class="form-row">
+      <input type="text" name="お名前" placeholder="お名前 *" required>
+      <input type="email" name="メールアドレス" placeholder="メールアドレス *" required>
+    </div>
+    <div class="form-row">
+      <input type="tel" name="電話番号" placeholder="電話番号">
+      <input type="date" name="来店希望日">
+    </div>
+    <div class="form-row">
+      <select name="来店人数"><option value="">来店人数</option><option>1名</option><option>2名</option><option>3〜4名</option><option>5名以上</option></select>
+      <select name="ご利用シーン"><option value="">ご利用シーン</option><option>おひとり様</option><option>友人と</option><option>カップル</option><option>家族</option><option>観光</option></select>
+    </div>
+    <textarea name="ご要望・アレルギー" placeholder="ご要望・アレルギー・お茶の好みなどお気軽にどうぞ"></textarea>
+    <input type="hidden" name="_subject" value="【茶縁 CHAEN】お問い合わせが届きました">
+    <input type="text" name="_gotcha" style="display:none">
+    <button type="submit" class="btn-submit" id="submit-btn">✉️ 送信する</button>
+  </form>
+
+  <div class="sns-footer">
+    <a href="https://twitter.com/yourpage" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.736-8.861L1.961 2.25h6.862l4.264 5.632 5.157-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      X (Twitter)
+    </a>
+    <a href="https://instagram.com/yourpage" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+    <a href="https://youtube.com/yourpage" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo-ja">茶　縁</div>
+  <div class="footer-logo-en">C H A E N</div>
+  <p>京都府京都市東山区○○町12-3　|　TEL: 075-123-4567<br>営業時間 10:00〜18:00（水・木定休）</p>
+  <p style="margin-top:12px">© 2025 茶縁 CHAEN. All rights reserved.</p>
+</footer>
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="トップへ">↑</button>
+
+<script>
+// ── MENU TABS ──
+const tabBtns  = document.querySelectorAll('.tab-btn');
+const menuCards = document.querySelectorAll('.menu-card');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.textContent.trim();
+    menuCards.forEach(card => {
+      const match = cat === 'すべて' || card.dataset.category === cat;
+      card.classList.toggle('hidden', !match);
+      if (match) setTimeout(() => card.classList.add('visible'), 50);
+    });
+  });
+});
+
+// ── NAV ──
+const nav = document.getElementById('navbar');
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const scrollTopBtn = document.getElementById('scroll-top');
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 40);
+  scrollTopBtn.classList.toggle('show', y > 500);
+  let cur = '';
+  sections.forEach(s => { if (y >= s.offsetTop - 100) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+});
+
+// ── HAMBURGER ──
+const hbg = document.getElementById('hamburger');
+const nl  = document.getElementById('nav-links');
+hbg.addEventListener('click', () => nl.classList.toggle('open'));
+document.addEventListener('click', e => {
+  if (!hbg.contains(e.target) && !nl.contains(e.target)) nl.classList.remove('open');
+});
+
+// ── INTERSECTION OBSERVER ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    // 通常カード
+    en.target.querySelectorAll(
+      '.concept-card,.menu-card,.info-card,.review-card'
+    ).forEach((c, i) => setTimeout(() => c.classList.add('visible'), i * 110));
+    // オーナーセクション
+    en.target.querySelectorAll('.owner-text,.owner-img-wrap')
+      .forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 200));
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('#concept,#menu,#info,#reviews,#owner').forEach(s => io.observe(s));
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); nl.classList.remove('open'); }
+  });
+});
+
+// ── FORM SUBMIT ──
+const contactForm = document.getElementById('contact-form');
+const submitBtn   = document.getElementById('submit-btn');
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ 送信中...';
+    try {
+      const res = await fetch(contactForm.action, {
+        method:'POST', body: new FormData(contactForm),
+        headers:{ Accept:'application/json' }
+      });
+      if (res.ok) {
+        submitBtn.innerHTML = '✅ 送信しました！ありがとうございます';
+        submitBtn.style.background = '#4a8c6a';
+        contactForm.reset();
+        setTimeout(() => {
+          submitBtn.innerHTML = '✉️ 送信する';
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+        }, 4000);
+      } else { throw new Error(); }
+    } catch {
+      submitBtn.innerHTML = '❌ 送信に失敗しました。再度お試しください';
+      submitBtn.style.background = '#9b4545';
+      submitBtn.disabled = false;
+      setTimeout(() => {
+        submitBtn.innerHTML = '✉️ 送信する';
+        submitBtn.style.background = '';
+      }, 4000);
+    }
+  });
+}
+</script>
+</body>
+</html>

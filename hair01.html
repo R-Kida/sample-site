@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Salon Lumière</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pk:#F7B8C6;--pkd:#E8698A;--sec:#FDE8EF;--acc:#D4538A;--cta:#C73B78;
+  --tx:#4A3040;--txl:#8B6070;--wh:#FFFFFF;--ow:#FEF5F8;--sh:rgba(212,83,138,.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hiragino Kaku Gothic Pro','Noto Sans JP',system-ui,sans-serif;color:var(--tx);background:var(--wh);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* SNS HEADER */
+.sns-hdr{background:linear-gradient(90deg,#3A1828,#5E2A4E);padding:7px 24px;display:flex;justify-content:flex-end;align-items:center;gap:10px;position:relative;z-index:1000}
+.sns-hdr span{color:rgba(255,255,255,.6);font-size:11px;margin-right:6px;letter-spacing:.08em}
+.snsbtn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;color:#fff;font-size:14px;transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.snsbtn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#fff;transform:scaleX(0);transition:transform .3s}
+.snsbtn:hover::after{transform:scaleX(1)}
+.snsbtn:hover{transform:scale(1.12);box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.sx{background:#000}.sig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.sfb{background:#4267B2}.syt{background:#FF0000}
+.shpb{background:#E4002B;width:auto;padding:0 11px;border-radius:16px;font-size:10px;font-weight:700;letter-spacing:.03em}
+
+/* NAV */
+.mnav{position:fixed;top:46px;left:0;right:0;z-index:999;padding:0 40px;display:flex;justify-content:space-between;align-items:center;height:68px;transition:background .4s,box-shadow .4s}
+.mnav.scrolled{background:rgba(255,255,255,.93);backdrop-filter:blur(14px);box-shadow:0 2px 22px var(--sh)}
+.navlogo{font-size:21px;font-weight:700;color:#fff;letter-spacing:.12em;transition:color .4s}
+.mnav.scrolled .navlogo{color:var(--acc)}
+.navlinks{display:flex;gap:28px;list-style:none}
+.navlinks a{color:rgba(255,255,255,.88);font-size:12px;letter-spacing:.12em;position:relative;padding-bottom:4px;transition:color .3s}
+.mnav.scrolled .navlinks a{color:var(--tx)}
+.navlinks a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.navlinks a:hover::after,.navlinks a.active::after{transform:scaleX(1)}
+.navlinks a:hover{color:var(--pk)}
+.mnav.scrolled .navlinks a:hover{color:var(--acc)}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#3A1040 0%,#7A2A60 35%,#B84575 65%,#EDA0B5 100%);transform:scale(1.12)}
+.hero-bg::before{content:'';position:absolute;width:580px;height:580px;border-radius:50%;background:rgba(255,255,255,.04);top:-120px;right:-100px}
+.hero-bg::after{content:'';position:absolute;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.06);bottom:-90px;left:-80px}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(58,16,64,.28),rgba(58,16,64,.52))}
+.hero-deco{position:absolute;font-size:220px;opacity:.04;right:8%;top:50%;transform:translateY(-50%) rotate(-18deg);pointer-events:none;color:#fff;user-select:none}
+.hero-content{position:relative;z-index:2;text-align:center;color:#fff;padding:0 20px;animation:hfade 1.2s ease forwards}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.38);border-radius:30px;padding:6px 22px;font-size:11px;letter-spacing:.22em;margin-bottom:24px;backdrop-filter:blur(4px)}
+.hero-title{font-size:clamp(38px,6vw,74px);font-weight:300;letter-spacing:.14em;line-height:1.2;margin-bottom:10px}
+.hero-title span{font-weight:700;color:var(--pk)}
+.hero-sub{font-size:clamp(13px,2vw,17px);letter-spacing:.22em;opacity:.84;margin-bottom:42px;line-height:1.9}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:linear-gradient(135deg,var(--acc),var(--cta));color:#fff;padding:15px 34px;border-radius:50px;font-size:14px;font-weight:700;letter-spacing:.08em;border:none;cursor:pointer;transition:transform .3s,box-shadow .3s;animation:pulse 1.5s ease-in-out infinite;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:scale(1.06);box-shadow:0 8px 30px rgba(199,59,120,.5);animation:none}
+.btn-o{background:transparent;color:#fff;padding:14px 34px;border-radius:50px;font-size:14px;font-weight:600;letter-spacing:.08em;border:2px solid rgba(255,255,255,.58);cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-o:hover{background:rgba(255,255,255,.14);border-color:#fff;transform:scale(1.06)}
+.scroll-dn{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.65);font-size:11px;letter-spacing:.2em;display:flex;flex-direction:column;align-items:center;gap:7px;animation:bounce 2s infinite}
+
+/* SECTIONS BASE */
+section{padding:96px 40px}
+.slabel{font-size:10px;letter-spacing:.32em;color:var(--acc);text-transform:uppercase;margin-bottom:11px;display:block}
+.stitle{font-size:clamp(26px,3.5vw,42px);font-weight:300;color:var(--tx);line-height:1.3;margin-bottom:14px}
+.stitle span{font-weight:700}
+.sdesc{font-size:14px;color:var(--txl);line-height:1.95;max-width:580px}
+.shdr{margin-bottom:56px}
+.shdr.c{text-align:center}
+.shdr.c .sdesc{margin:0 auto}
+
+/* ANIMATE */
+.ac{opacity:0;transform:translateY(38px);transition:opacity .7s ease,transform .7s ease}
+.ac.v{opacity:1;transform:translateY(0)}
+
+/* CONCEPT */
+.concept{background:var(--ow)}
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1080px;margin:0 auto}
+.cc{background:#fff;border-radius:20px;padding:44px 32px;text-align:center;box-shadow:0 4px 22px var(--sh);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pk),var(--acc))}
+.cc:hover{transform:translateY(-9px);box-shadow:0 18px 48px var(--sh)}
+.ci{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--sec),var(--pk));display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:30px;transition:transform .3s}
+.cc:hover .ci{transform:rotate(15deg) scale(1.2)}
+.cc h3{font-size:17px;font-weight:700;margin-bottom:11px;color:var(--tx)}
+.cc p{font-size:13px;color:var(--txl);line-height:1.85}
+
+/* MENU */
+.menu{background:#fff}
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:980px;margin:0 auto 44px}
+.mc{background:var(--ow);border-radius:18px;overflow:hidden;display:flex;transition:transform .3s,box-shadow .3s;box-shadow:0 2px 12px var(--sh)}
+.mc:hover{transform:translateY(-7px);box-shadow:0 14px 38px var(--sh)}
+.mc-img{width:130px;min-height:178px;background:linear-gradient(135deg,var(--pk),var(--acc));display:flex;align-items:center;justify-content:center;font-size:44px;flex-shrink:0}
+.mc-body{padding:22px;flex:1}
+.badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#FFD700,#FFA040);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:9px;letter-spacing:.04em}
+.badge.cp{background:linear-gradient(135deg,#FF6B9D,#C73B78)}
+.mc-name{font-size:16px;font-weight:700;color:var(--tx);margin-bottom:5px}
+.mc-desc{font-size:12px;color:var(--txl);line-height:1.75;margin-bottom:10px}
+.mc-old{font-size:12px;color:var(--txl);text-decoration:line-through}
+.mc-new{font-size:21px;font-weight:700;color:var(--acc)}
+.mc-new small{font-size:12px}
+.hpb-btn{display:inline-flex;align-items:center;gap:5px;background:#E4002B;color:#fff;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:700;margin-top:9px;transition:all .3s;letter-spacing:.04em}
+.hpb-btn:hover{background:#B8001E;transform:scale(1.04);box-shadow:0 4px 12px rgba(228,0,43,.3)}
+.menu-cta{text-align:center}
+
+/* STAFF */
+.staff{background:linear-gradient(135deg,#FDE8EF,#FFF2F7)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1080px;margin:0 auto}
+.scard{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 4px 22px var(--sh);transition:transform .3s,box-shadow .3s}
+.scard:hover{transform:translateY(-9px);box-shadow:0 22px 52px var(--sh)}
+.simg{height:210px;background:linear-gradient(135deg,#F7B8C6,#E8698A);display:flex;align-items:center;justify-content:center;font-size:76px;position:relative}
+.simg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:38px;background:#fff;border-radius:50% 50% 0 0/38px 38px 0 0}
+.sbody{padding:14px 26px 26px}
+.srole{font-size:10px;letter-spacing:.2em;color:var(--acc);font-weight:700;margin-bottom:3px}
+.sname{font-size:21px;font-weight:700;color:var(--tx);margin-bottom:3px}
+.sname-en{font-size:11px;color:var(--txl);letter-spacing:.14em;margin-bottom:14px}
+.sdesc2{font-size:12px;color:var(--txl);line-height:1.85;margin-bottom:14px}
+.sach{background:var(--sec);border-radius:11px;padding:12px 15px}
+.sach h4{font-size:10px;letter-spacing:.16em;color:var(--acc);margin-bottom:7px;font-weight:700}
+.sach ul{list-style:none}
+.sach li{font-size:11px;color:var(--tx);padding:3px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.55}
+.sach li::before{content:'✦';color:var(--acc);font-size:7px;margin-top:4px;flex-shrink:0}
+
+/* STORE */
+.store{background:#fff}
+.ig{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1080px;margin:0 auto}
+.icard{background:var(--ow);border-radius:18px;padding:34px 20px;text-align:center;transition:transform .3s,box-shadow .3s;border:1px solid rgba(247,184,198,.28)}
+.icard:hover{transform:translateY(-7px);box-shadow:0 12px 36px var(--sh)}
+.iico{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--sec),var(--pk));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:22px;color:var(--acc);transition:transform .3s}
+.icard:hover .iico{transform:rotate(15deg) scale(1.2)}
+.icard h3{font-size:12px;letter-spacing:.14em;color:var(--acc);margin-bottom:10px;font-weight:700}
+.icard p{font-size:13px;color:var(--tx);line-height:1.9}
+.icard p strong{font-weight:700}
+.map-d{max-width:1080px;margin:36px auto 0;height:196px;background:#E8D4E0;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative;overflow:hidden}
+.map-d::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(212,83,138,.06) 28px,rgba(212,83,138,.06) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(212,83,138,.06) 28px,rgba(212,83,138,.06) 29px)}
+.map-d span{position:relative;z-index:1;font-size:16px;letter-spacing:.1em;color:var(--txl)}
+
+/* REVIEWS */
+.reviews{background:var(--ow)}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1080px;margin:0 auto}
+.rcard{background:#fff;border-radius:18px;padding:28px;box-shadow:0 4px 18px var(--sh);position:relative;transition:transform .3s}
+.rcard:hover{transform:translateY(-5px)}
+.rcard::before{content:'"';position:absolute;top:12px;right:22px;font-size:76px;color:var(--sec);font-family:serif;line-height:1}
+.rstars{display:flex;gap:3px;margin-bottom:13px}
+.rstars i{font-size:15px;color:#F7B8C6}
+.rstars i.f{color:#E8698A}
+.rtext{font-size:13px;color:var(--tx);line-height:1.9;margin-bottom:18px}
+.rprof{display:flex;align-items:center;gap:11px}
+.ravatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pk),var(--acc));display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.rname{font-size:13px;font-weight:700;color:var(--tx)}
+.rdate{font-size:11px;color:var(--txl)}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,#3A1040,#7A2A5E,#B84575);color:#fff;text-align:center;position:relative;overflow:hidden;padding:100px 40px}
+.contact::before{content:'';position:absolute;width:480px;height:480px;border-radius:50%;background:rgba(255,255,255,.04);top:-140px;right:-90px;pointer-events:none}
+.contact::after{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.04);bottom:-80px;left:-70px;pointer-events:none}
+.cin{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.contact .slabel{color:var(--pk)}
+.contact .stitle{color:#fff}
+.contact .sdesc{color:rgba(255,255,255,.74);margin:0 auto 44px}
+.cbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-w{background:#fff;color:var(--acc);padding:15px 34px;border-radius:50px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:8px;animation:pulse 1.5s ease-in-out infinite}
+.btn-w:hover{transform:scale(1.06);box-shadow:0 8px 28px rgba(255,255,255,.28);animation:none}
+.cform{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:18px;padding:36px;border:1px solid rgba(255,255,255,.18)}
+.cform h3{font-size:17px;font-weight:600;margin-bottom:22px;letter-spacing:.1em}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.fg label{font-size:11px;letter-spacing:.1em;opacity:.78}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:11px 15px;color:#fff;font-size:13px;font-family:inherit;transition:border-color .3s;outline:none}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.45)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--pk)}
+.fg select option{background:#4A1942;color:#fff}
+.fg textarea{resize:vertical;min-height:86px}
+.fsub{background:linear-gradient(135deg,var(--pk),var(--acc));color:#fff;border:none;padding:14px 40px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;width:100%;letter-spacing:.08em}
+.fsub:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(0,0,0,.22)}
+
+/* FOOTER */
+footer{background:#24102C;color:rgba(255,255,255,.65);padding:44px 40px;text-align:center}
+.flogo{font-size:22px;font-weight:700;color:var(--pk);letter-spacing:.16em;margin-bottom:6px}
+.ftagline{font-size:11px;letter-spacing:.14em;margin-bottom:28px;opacity:.55}
+.fsns{display:flex;justify-content:center;gap:14px;margin-bottom:28px}
+.flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.flinks a{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.1em;transition:color .3s}
+.flinks a:hover{color:var(--pk)}
+.fcopy{font-size:10px;opacity:.38;letter-spacing:.1em}
+
+/* ANIMATIONS */
+@keyframes hfade{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(199,59,120,.38)}50%{box-shadow:0 0 0 10px rgba(199,59,120,0)}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.sg{grid-template-columns:repeat(2,1fr)}.ig{grid-template-columns:repeat(2,1fr)}.cg{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  section{padding:68px 18px}.mnav{padding:0 18px}.navlinks{display:none}
+  .cg{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.sg{grid-template-columns:1fr}
+  .ig{grid-template-columns:repeat(2,1fr)}.rg{grid-template-columns:1fr}.frow{grid-template-columns:1fr}
+  .hero-btns,.cbtns{flex-direction:column;align-items:center}.contact{padding:68px 18px}
+}
+@media(max-width:480px){.ig{grid-template-columns:1fr}.sns-hdr span{display:none}}
+</style>
+</head>
+<body>
+
+<!-- SNS HEADER -->
+<div class="sns-hdr">
+  <span>Follow Us</span>
+  <a href="https://twitter.com/yourpage" target="_blank" class="snsbtn sx" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+  <a href="https://instagram.com/yourpage" target="_blank" class="snsbtn sig" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+  <a href="https://facebook.com/yourpage" target="_blank" class="snsbtn sfb" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+  <a href="https://youtube.com/@yourpage" target="_blank" class="snsbtn syt" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+  <a href="https://beauty.hotpepper.jp/yourpage" target="_blank" class="snsbtn shpb" aria-label="ホットペッパービューティー">HPB</a>
+</div>
+
+<!-- NAV -->
+<nav class="mnav" id="mnav">
+  <div class="navlogo">✦ Lumière</div>
+  <ul class="navlinks">
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#menu">MENU</a></li>
+    <li><a href="#staff">STAFF</a></li>
+    <li><a href="#store">ACCESS</a></li>
+    <li><a href="#reviews">REVIEW</a></li>
+    <li><a href="#contact">RESERVE</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="hbg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-deco">✂</div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Hair Salon in Omotesando, Tokyo ✦</div>
+    <h1 class="hero-title">Hair Salon<br><span>Lumière</span></h1>
+    <p class="hero-sub">あなたの美しさに、光をあてる。<br>一人ひとりに寄り添う、上質なヘアサロン</p>
+    <div class="hero-btns">
+      <a href="https://beauty.hotpepper.jp/yourpage/reserve/" target="_blank" class="btn-p">
+        <i class="fas fa-calendar-check"></i> 今すぐ予約する
+      </a>
+      <a href="#menu" class="btn-o">
+        <i class="fas fa-scissors"></i> メニューを見る
+      </a>
+    </div>
+  </div>
+  <div class="scroll-dn">
+    <span>SCROLL</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="concept">
+  <div class="shdr c">
+    <span class="slabel">Our Philosophy</span>
+    <h2 class="stitle">私たちの<span>こだわり</span></h2>
+    <p class="sdesc">お客様一人ひとりの個性と魅力を最大限に引き出す。それがルミエールの約束です。</p>
+  </div>
+  <div class="cg">
+    <div class="cc ac">
+      <div class="ci">✨</div>
+      <h3>極上トリートメント</h3>
+      <p>パリ直輸入のオーガニック成分を使用した最上級ケアで、艶やかで健康的な美髪へと導きます。</p>
+    </div>
+    <div class="cc ac" style="transition-delay:.14s">
+      <div class="ci">🎨</div>
+      <h3>似合わせカラー技術</h3>
+      <p>お客様の肌色・骨格・ライフスタイルを丁寧に分析。あなただけのパーソナルカラーをご提案。</p>
+    </div>
+    <div class="cc ac" style="transition-delay:.28s">
+      <div class="ci">💆</div>
+      <h3>リラクゼーション空間</h3>
+      <p>施術中のシャンプー・ヘッドスパで日常の疲れを解放。非日常のくつろぎの時間をお届けします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="shdr c">
+    <span class="slabel">Style Menu</span>
+    <h2 class="stitle">メニュー <span>&amp;</span> クーポン</h2>
+    <p class="sdesc">初回限定クーポンから人気スタイルまで、充実のメニューをご用意しています。</p>
+  </div>
+  <div class="mgrid">
+    <div class="mc ac">
+      <div class="mc-img">✂️</div>
+      <div class="mc-body">
+        <div class="badge cp"><i class="fas fa-tag"></i> 初回限定クーポン</div>
+        <div class="mc-name">カット + カラー</div>
+        <div class="mc-desc">似合わせカットと透明感カラーのセット。初めての方に特別価格でご提供いたします。</div>
+        <div class="mc-old">通常 ¥18,000</div>
+        <div class="mc-new">¥12,800 <small>（税込）</small></div>
+        <a href="https://beauty.hotpepper.jp/yourpage/coupon/" target="_blank" class="hpb-btn">
+          <i class="fas fa-external-link-alt"></i> HPBでクーポンを見る
+        </a>
+      </div>
+    </div>
+    <div class="mc ac" style="transition-delay:.1s">
+      <div class="mc-img">💆</div>
+      <div class="mc-body">
+        <div class="badge"><i class="fas fa-crown"></i> 人気No.1</div>
+        <div class="mc-name">プレミアムトリートメント</div>
+        <div class="mc-desc">パリ直輸入オーガニック成分使用。潤いと輝きを髪に閉じ込めるスペシャルケア。</div>
+        <div class="mc-old">通常 ¥14,000</div>
+        <div class="mc-new">¥9,800 <small>（税込）</small></div>
+        <a href="https://beauty.hotpepper.jp/yourpage/menu/" target="_blank" class="hpb-btn">
+          <i class="fas fa-external-link-alt"></i> HPBでメニューを見る
+        </a>
+      </div>
+    </div>
+    <div class="mc ac" style="transition-delay:.2s">
+      <div class="mc-img">🌸</div>
+      <div class="mc-body">
+        <div class="badge cp"><i class="fas fa-tag"></i> 平日クーポン</div>
+        <div class="mc-name">ヘッドスパ + カット</div>
+        <div class="mc-desc">極上ヘッドスパで頭皮から美しく。平日限定のお得なセットメニューです。</div>
+        <div class="mc-old">通常 ¥16,000</div>
+        <div class="mc-new">¥10,500 <small>（税込）</small></div>
+        <a href="https://beauty.hotpepper.jp/yourpage/coupon/" target="_blank" class="hpb-btn">
+          <i class="fas fa-external-link-alt"></i> HPBでクーポンを見る
+        </a>
+      </div>
+    </div>
+    <div class="mc ac" style="transition-delay:.3s">
+      <div class="mc-img">🌟</div>
+      <div class="mc-body">
+        <div class="badge"><i class="fas fa-star"></i> 新メニュー</div>
+        <div class="mc-name">縮毛矯正 + トリートメント</div>
+        <div class="mc-desc">最新技術で自然なストレートを実現。ダメージレスで美しい仕上がりに。</div>
+        <div class="mc-old">通常 ¥28,000</div>
+        <div class="mc-new">¥22,000 <small>（税込）</small></div>
+        <a href="https://beauty.hotpepper.jp/yourpage/menu/" target="_blank" class="hpb-btn">
+          <i class="fas fa-external-link-alt"></i> HPBでメニューを見る
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="menu-cta ac">
+    <a href="https://beauty.hotpepper.jp/yourpage" target="_blank" class="btn-p" style="display:inline-flex">
+      <i class="fas fa-list"></i> ホットペッパービューティーで全メニューを見る
+    </a>
+  </div>
+</section>
+
+<!-- STAFF -->
+<section class="staff" id="staff">
+  <div class="shdr c">
+    <span class="slabel">Our Team</span>
+    <h2 class="stitle">スタッフ<span>紹介</span></h2>
+    <p class="sdesc">お客様の美しさを引き出すプロフェッショナルたちをご紹介します。</p>
+  </div>
+  <div class="sg">
+    <div class="scard ac">
+      <div class="simg">👩</div>
+      <div class="sbody">
+        <div class="srole">DIRECTOR / TOP STYLIST</div>
+        <div class="sname">佐藤 美咲</div>
+        <div class="sname-en">Misaki Sato</div>
+        <div class="sdesc2">パリ・ロンドンでの修行を経て帰国。「その人らしさ」を最大限に引き出すスタイリングが得意。カラーリングの技術には定評があります。</div>
+        <div class="sach">
+          <h4>ACHIEVEMENTS &amp; CAREER</h4>
+          <ul>
+            <li>ヘアデザイナー歴 15年</li>
+            <li>Vidal Sassoon Academy ロンドン校 修了</li>
+            <li>全日本美容技術選手権 カラー部門 優勝</li>
+            <li>美容業界誌「HAIR MODE」掲載多数</li>
+            <li>年間施術者数 1,200名以上</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="scard ac" style="transition-delay:.14s">
+      <div class="simg">👩‍🦱</div>
+      <div class="sbody">
+        <div class="srole">SENIOR STYLIST</div>
+        <div class="sname">田中 彩花</div>
+        <div class="sname-en">Ayaka Tanaka</div>
+        <div class="sdesc2">韓国トレンドをいち早く取り入れたスタイルが大人気。SNSでのヘアスタイル投稿は1万いいね越えも多数。</div>
+        <div class="sach">
+          <h4>ACHIEVEMENTS &amp; CAREER</h4>
+          <ul>
+            <li>ヘアデザイナー歴 10年</li>
+            <li>K-BEAUTY Hair Award 受賞</li>
+            <li>Instagram フォロワー 8.5万人</li>
+            <li>ヘアカタログモデル撮影 経験多数</li>
+            <li>縮毛矯正スペシャリスト認定</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="scard ac" style="transition-delay:.28s">
+      <div class="simg">👩‍🦰</div>
+      <div class="sbody">
+        <div class="srole">HAIR THERAPIST</div>
+        <div class="sname">山田 奈々</div>
+        <div class="sname-en">Nana Yamada</div>
+        <div class="sdesc2">ヘッドスパとトリートメントのスペシャリスト。頭皮から美しくなるホリスティックケアを提案します。</div>
+        <div class="sach">
+          <h4>ACHIEVEMENTS &amp; CAREER</h4>
+          <ul>
+            <li>ヘアセラピスト歴 8年</li>
+            <li>国際ヘッドスパ協会認定セラピスト</li>
+            <li>オーガニックヘアケアアドバイザー資格保有</li>
+            <li>フランス「L'Oréal」技術研修修了</li>
+            <li>頭皮改善カウンセリング実績 3,000件以上</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORE INFO -->
+<section class="store" id="store">
+  <div class="shdr c">
+    <span class="slabel">Visit Us</span>
+    <h2 class="stitle">店舗<span>情報</span></h2>
+  </div>
+  <div class="ig">
+    <div class="icard ac">
+      <div class="iico"><i class="fas fa-map-marker-alt"></i></div>
+      <h3>所在地</h3>
+      <p>〒150-0001<br>東京都渋谷区神宮前3-1-XX<br>表参道ビル 3F</p>
+    </div>
+    <div class="icard ac" style="transition-delay:.1s">
+      <div class="iico"><i class="fas fa-clock"></i></div>
+      <h3>営業時間</h3>
+      <p>平日 10:00〜20:00<br>土日祝 9:00〜19:00<br><strong>定休日：毎週火曜日</strong></p>
+    </div>
+    <div class="icard ac" style="transition-delay:.2s">
+      <div class="iico"><i class="fas fa-phone"></i></div>
+      <h3>お電話</h3>
+      <p><strong>03-XXXX-XXXX</strong><br>お電話でのご予約も<br>承っております</p>
+    </div>
+    <div class="icard ac" style="transition-delay:.3s">
+      <div class="iico"><i class="fas fa-train"></i></div>
+      <h3>アクセス</h3>
+      <p>東京メトロ銀座線<br>「表参道駅」A2出口より<br>徒歩3分</p>
+    </div>
+  </div>
+  <div class="map-d ac"><span>📍 表参道エリア ― 地図はこちら</span></div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="shdr c">
+    <span class="slabel">Customer Voice</span>
+    <h2 class="stitle">お客様の<span>声</span></h2>
+    <p class="sdesc">実際にご来店いただいたお客様からいただいた口コミです。</p>
+  </div>
+  <div class="rg">
+    <div class="rcard ac">
+      <div class="rstars"><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i></div>
+      <div class="rtext">初めての来店でしたが、担当の佐藤さんがとても丁寧にカウンセリングしてくださいました。希望通りの透明感カラーに仕上げていただき、大満足です！友人にも絶対紹介します✨</div>
+      <div class="rprof">
+        <div class="ravatar">👤</div>
+        <div><div class="rname">30代・会社員 K.M様</div><div class="rdate">2024年11月 ご来店</div></div>
+      </div>
+    </div>
+    <div class="rcard ac" style="transition-delay:.14s">
+      <div class="rstars"><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i></div>
+      <div class="rtext">縮毛矯正をお願いしたのですが、仕上がりが自然でびっくり！ぺたっとならずにサラサラで、ダメージが全然ない。田中さんの技術、本当にすごいです。また絶対来ます！</div>
+      <div class="rprof">
+        <div class="ravatar">👤</div>
+        <div><div class="rname">20代・学生 A.N様</div><div class="rdate">2024年12月 ご来店</div></div>
+      </div>
+    </div>
+    <div class="rcard ac" style="transition-delay:.28s">
+      <div class="rstars"><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star f"></i><i class="fas fa-star"></i></div>
+      <div class="rtext">ヘッドスパが最高でした！山田さんの手技が絶妙で、施術中に眠ってしまいそうに。頭皮ケアについて丁寧に説明してくれたのも嬉しかったです。空間もとても素敵でした。</div>
+      <div class="rprof">
+        <div class="ravatar">👤</div>
+        <div><div class="rname">40代・主婦 Y.T様</div><div class="rdate">2025年1月 ご来店</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="cin">
+    <span class="slabel">Reservation</span>
+    <h2 class="stitle">ご予約・<span style="color:var(--pk)">お問い合わせ</span></h2>
+    <p class="sdesc">オンラインからいつでもご予約いただけます。お気軽にご相談ください。</p>
+    <div class="cbtns">
+      <a href="https://beauty.hotpepper.jp/yourpage/reserve/" target="_blank" class="btn-w">
+        <i class="fas fa-calendar-check"></i> ホットペッパービューティーで予約
+      </a>
+      <a href="tel:03-XXXX-XXXX" class="btn-o" style="color:#fff">
+        <i class="fas fa-phone"></i> 電話で予約
+      </a>
+    </div>
+    <div class="cform">
+      <h3>✦ お問い合わせフォーム</h3>
+      <div class="frow">
+        <div class="fg"><label>お名前 *</label><input type="text" placeholder="山田 花子"></div>
+        <div class="fg"><label>電話番号</label><input type="tel" placeholder="090-XXXX-XXXX"></div>
+      </div>
+      <div class="fg"><label>メールアドレス *</label><input type="email" placeholder="example@email.com"></div>
+      <div class="fg">
+        <label>ご希望のメニュー</label>
+        <select>
+          <option>カット + カラー（初回クーポン）</option>
+          <option>プレミアムトリートメント</option>
+          <option>ヘッドスパ + カット（平日クーポン）</option>
+          <option>縮毛矯正 + トリートメント</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="fg"><label>メッセージ・ご要望</label><textarea placeholder="ご要望やご質問などお気軽にご記入ください。"></textarea></div>
+      <button class="fsub" id="fsub"><i class="fas fa-paper-plane"></i>　送信する</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">✦ Hair Salon Lumière</div>
+  <div class="ftagline">あなたの美しさに、光をあてる。</div>
+  <div class="fsns">
+    <a href="https://twitter.com/yourpage" target="_blank" class="snsbtn sx"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="https://instagram.com/yourpage" target="_blank" class="snsbtn sig"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://facebook.com/yourpage" target="_blank" class="snsbtn sfb"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="https://youtube.com/@yourpage" target="_blank" class="snsbtn syt"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://beauty.hotpepper.jp/yourpage" target="_blank" class="snsbtn shpb">HPB</a>
+  </div>
+  <div class="flinks">
+    <a href="#hero">HOME</a><a href="#concept">CONCEPT</a><a href="#menu">MENU</a>
+    <a href="#staff">STAFF</a><a href="#store">ACCESS</a><a href="#reviews">REVIEW</a>
+    <a href="#contact">CONTACT</a>
+    <a href="https://beauty.hotpepper.jp/yourpage" target="_blank">ホットペッパービューティー</a>
+  </div>
+  <div class="fcopy">© 2025 Hair Salon Lumière. All Rights Reserved.</div>
+</footer>
+
+<script>
+// PARALLAX HERO
+const hbg = document.getElementById('hbg');
+window.addEventListener('scroll', () => {
+  hbg.style.transform = `scale(1.12) translateY(${window.scrollY * 0.28}px)`;
+}, { passive: true });
+
+// NAV SCROLL + ACTIVE LINK
+const mnav = document.getElementById('mnav');
+const navAs = document.querySelectorAll('.navlinks a');
+const secs = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  mnav.classList.toggle('scrolled', window.scrollY > 70);
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 110) cur = s.id; });
+  navAs.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}, { passive: true });
+
+// INTERSECTION OBSERVER — card animations
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+document.querySelectorAll('.ac').forEach(el => obs.observe(el));
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 115, behavior: 'smooth' }); }
+  });
+});
+
+// FORM SUBMIT
+document.getElementById('fsub').addEventListener('click', () => {
+  alert('お問い合わせありがとうございます。\n2営業日以内にご連絡いたします。');
+});
+</script>
+</body>
+</html># 命令
+あなたはプロのフロントエンドエンジニア兼Webデザイナーです。
+以下の要件を満たす、ヘアサロン用Webページ（1ページ完結）のHTMLコードを作成してください。
+外部リンクはホットペッパービューティは必須です。
+スタイルメニューにはクーポン項目とホットペッパービューティーのメニューページへのリンク
+魅力的なスタッフ紹介を実績含めて作成
+メインビジュアル含め画面いっぱいに動画や画像を使いパララックスなど魅力的なUIを採用
+全体的に女性好みの甘い色合いでデザイン
+
+# 要件
+- **形式**: HTML1ファイル内で完結（CSS・JSはすべて内蔵）
+- **レスポンシブ**: PC・タブレット・スマホすべてで適切に表示
+- **セマンティックHTML**: `<header>`,`<main>`,`<section>`,`<footer>`を適切に使用
+- **画像対応**: 外部画像不要、すべてCSSダミー/仮実装
+
+# ページ構成（6セクション＋SNSヘッダー）
+1. **SNS headerセクション**: 上部にTwitter/X・Instagram・Facebook・YouTubeのSNSボタン横並び
+2. **ヒーローセクション**: 店舗名・キャッチコピー・メインビジュアル（CSSダミー・料理/商品風）・CTAボタン（予約/来店）
+3. **コンセプトセクション**: 店舗のコンセプト/こだわりを3ポイント（アイコン付き）
+4. **メニュー/商品セクション**: 3-4アイテムの紹介（カードデザイン＋画像ダミー）
+5. **店舗情報セクション**: 所在地・営業時間・電話番号・アクセスを4カード
+6. **口コミセクション**: 顧客の口コミを2-3件（プロフィール画像ダミー＋星評価）
+7. **お問い合わせCTAセクション**: 予約ボタン＋簡易フォーム＋SNS footer
+
+# 画像ダミー・CSS仮実装仕様（必須）
+| 画像タイプ | CSS実装方法 | サイズ/色 |
+|-----------|------------|----------|
+| **ヒーローメインビジュアル** | `background: linear-gradient(135deg, #FF6600, #FFCC00)` + 料理/商品形（円形） | 400×400px, 中央 |
+| **メニュー画像カード** | `background: #F5F5F7` + 円形 + 中央に`🍴`または`🛍️`文字 | 120×120px, 円形 |
+| **口コミプロフィール画像** | `background: #DDDDDD` + 円形 + 中央に`👤`文字 | 60×60px, 円形 |
+| **星評価アイコン** | FontAwesome `fa-star` + `color: #FFCC00` | 24px, 5個横並び |
+| **所在地マップ** | `width: 100%` + `height: 200px` + `background: #E8E8E8` + 中央に`📍` | マップ風 |
+
+# SNSボタン仕様
+- **アイコン**: FontAwesome CDN使用
+- **リンク先**: Twitter/X・Instagram・Facebook・YouTube（each `yourpage`）
+- **カラー**: 各SNS公式色（Twitter:#1DA1F2, Instagram:#E4405F, Facebook:#4267B2, YouTube:#FF0000）
+- **ホバー効果**: 色変化＋スケール1.1倍＋影THICKEN
+
+# デザイン指定（親しみやすさ＋モダン）
+- **カラーパレット**:
+  - ベース色: #FFFFFF（白）
+  - サブ色: #F9F9F9（薄いオフホワイト）
+  - アクセント色: #FF6600（オレンジ）
+  - CTA色: #FFCC00（イエロー）
+- **フォント**: system-ui
+- **雰囲気**: 親しみやすさ・温かみ・モダン・食欲/購買意欲そそる
+
+# アニメーション要件（7種類・同上）
+1. ヒーローフェードイン
+2. CTAボタンホバー（影THICKEN＋スケール）
+3. カードシュートイン（IntersectionObserver）
+4. アイコンホバー（回転15度＋スケール1.2倍）
+5. SNSボタンunder barアニメーション
+6. CTAパルス（1.5秒周期）
+7. スクロールナビゲーション
+
+# JavaScript実装要件
+- IntersectionObserver: セクション表示検知
+- スクロールイベント: ヘッダーナビゲーション更新
+- smooth scroll: CTAボタンクリックで対応セクションへ移動
+
+# ターゲット（飲食店例）
+- 20-40代・地元在住者
+- 遊び・デート・家族 Postagem に来店
+
+# ターゲット（小売店例）
+- 20-40代・通販/来店併用層
+- 品質重視・価格比較層
+
+# 出力形式
+- HTMLコードのみ
+- CSSは`<style>`タグ内、JSは`<script>`タグ内
+- 外部ライブラリ：FontAwesomeのみCDN

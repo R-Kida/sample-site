@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宮脇利之デザイン事務所 ｜ Web制作 木田 龍介</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #ffffff;
+    --bg-panel: #ffe9d2;
+    --bg-card: #ffffff;
+    --bg-tile: #fff6e9;
+    --line: #f2e2ca;
+    --ink: #3c2f22;
+    --ink-dim: #8a7960;
+    --ink-faint: #bfb097;
+    --coral: #ff7a59;
+    --coral-deep: #ee5f3d;
+    --teal: #1fb8a6;
+    --yellow: #ffc94a;
+    --display: 'Zen Maru Gothic', sans-serif;
+    --sans: 'Zen Maru Gothic', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 700px at 8% 5%, rgba(255,122,89,0.24), transparent 55%),
+      radial-gradient(ellipse 700px 650px at 60% 90%, rgba(31,184,166,0.16), transparent 60%),
+      radial-gradient(ellipse 600px 600px at 40% 10%, rgba(255,201,74,0.20), transparent 55%),
+      linear-gradient(160deg, var(--bg-panel), #fff6e8);
+    background-size:160% 160%, 160% 160%, 160% 160%, 100% 100%;
+    background-attachment:fixed;
+    animation:panelDrift 18s ease-in-out infinite;
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.85;
+  }
+  @keyframes panelDrift{
+    0%{background-position:0% 0%, 100% 100%, 50% 0%, 0 0;}
+    50%{background-position:20% 15%, 80% 80%, 60% 20%, 0 0;}
+    100%{background-position:0% 0%, 100% 100%, 50% 0%, 0 0;}
+  }
+  a{color:inherit;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ================= Layout shell ================= */
+  .layout{
+    display:grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    min-height:100vh;
+  }
+  @media (max-width: 860px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- Fixed side panel (desktop) : transparent, shows the body's animated background through ---- */
+  .side-panel{
+    position:sticky; top:0; height:100vh;
+    padding:32px 44px 44px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+
+  .bg-blobs{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+
+  .blob{position:absolute; border-radius:50%; filter:blur(2px); pointer-events:none; opacity:0.55;}
+  .blob-1{width:260px; height:260px; background:var(--coral); top:-70px; left:6%; animation:floatA 12s ease-in-out infinite;}
+  .blob-2{width:200px; height:200px; background:var(--teal); top:55%; left:32%; animation:floatB 15s ease-in-out infinite;}
+  .blob-3{width:150px; height:150px; background:var(--yellow); bottom:-40px; left:16%; animation:floatC 10s ease-in-out infinite;}
+  @keyframes floatA{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-24px,26px) scale(1.08);}
+  }
+  @keyframes floatB{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(18px,-22px) scale(0.94);}
+  }
+  @keyframes floatC{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    50%{transform:translate(14px,-16px) rotate(12deg);}
+  }
+
+  @media (max-width: 860px){
+    .side-panel{
+      position:static; height:auto;
+      padding:22px 24px;
+      flex-direction:row; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .blob-1{width:140px; height:140px; top:-40px; left:-20px;}
+    .blob-2{width:100px; height:100px; top:30%; left:50%;}
+    .blob-3{display:none;}
+  }
+
+  .side-center{
+    position:relative; z-index:2; flex:1;
+    display:flex; align-items:center;
+    padding:40px 0;
+  }
+  @media (max-width:860px){ .side-center{display:none;} }
+  .side-center h2{
+    font-family:var(--display); font-weight:900;
+    font-size:clamp(2.2rem, 4.4vw, 4.2rem);
+    line-height:1.45; letter-spacing:0.01em; color:var(--ink);
+  }
+  .side-center h2 em{font-style:normal; color:var(--coral-deep);}
+
+  .brand-firm{
+    font-family:var(--mono); font-weight:700; font-size:0.7rem; letter-spacing:0.12em;
+    color:var(--coral-deep); text-transform:uppercase; margin-bottom:6px;
+  }
+
+  .side-top{display:flex; flex-direction:column; gap:26px; position:relative; z-index:2;}
+  @media (max-width:860px){ .side-top{flex-direction:row; align-items:center; gap:14px; justify-content:space-between;} }
+
+  .side-name{font-family:var(--display); font-weight:900; font-size:1.7rem; letter-spacing:0.02em;}
+  .side-role{font-family:var(--mono); font-size:0.72rem; color:var(--coral-deep); margin-top:6px; letter-spacing:0.05em;}
+  @media (max-width:860px){ .side-name{font-size:1.05rem;} .side-role{font-size:0.66rem;} .brand-firm{font-size:0.6rem;} }
+
+  .side-bottom{display:flex; flex-direction:column; gap:12px; position:relative; z-index:2;}
+  @media (max-width:860px){ .side-bottom{display:none;} }
+  .side-tagline{color:var(--ink-dim); font-size:0.88rem; max-width:26ch;}
+  .side-btn{
+    position:relative;
+    margin-top:6px; display:inline-flex; justify-content:center;
+    font-family:var(--display); font-weight:700; font-size:0.85rem; letter-spacing:0.02em;
+    color:#fff; background:var(--coral); padding:14px 24px; text-decoration:none;
+    min-height:44px; align-items:center; border-radius:999px;
+    box-shadow:0 6px 16px rgba(255,122,89,0.35);
+    transition:transform .2s, box-shadow .2s;
+    animation:ctaWiggle 6s ease-in-out infinite;
+    transform-origin:50% 90%;
+  }
+  .side-btn:hover{animation-play-state:paused; transform:translateY(-3px) scale(1.04); box-shadow:0 10px 22px rgba(255,122,89,0.45);}
+  @keyframes ctaWiggle{
+    0%, 78%, 100%{transform:rotate(0deg) translateY(0);}
+    80%{transform:rotate(-6deg) translateY(-2px);}
+    83%{transform:rotate(7deg) translateY(-4px);}
+    86%{transform:rotate(-5deg) translateY(-2px);}
+    89%{transform:rotate(4deg) translateY(-1px);}
+    92%{transform:rotate(-2deg) translateY(0);}
+    95%{transform:rotate(1deg) translateY(0);}
+  }
+  .side-btn .spark{
+    position:absolute; top:-10px; right:-6px; font-size:0.9rem; line-height:1;
+    animation:sparkPulse 6s ease-in-out infinite;
+  }
+  @keyframes sparkPulse{
+    0%, 76%, 100%{opacity:0; transform:scale(0.4) rotate(0deg);}
+    80%{opacity:1; transform:scale(1.1) rotate(15deg);}
+    88%{opacity:1; transform:scale(0.9) rotate(-10deg);}
+    95%{opacity:0; transform:scale(0.5) rotate(0deg);}
+  }
+
+  .sns-row{display:flex; gap:10px; margin-top:4px;}
+  .sns-row a{
+    width:38px; height:38px; background:#fff; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--ink-dim);
+    box-shadow:0 2px 8px rgba(60,47,34,0.12);
+    transition:color .2s, transform .2s;
+  }
+  .sns-row a:hover{color:var(--coral-deep); transform:translateY(-2px);}
+  .sns-row svg{width:16px; height:16px;}
+
+  /* Hamburger button — fixed top-right corner, direct child of .layout so its
+     z-index competes at the same stacking level as .mobile-nav (not trapped
+     inside .side-panel's own stacking context) */
+  .menu-btn{
+    position:fixed; top:24px; right:24px; z-index:200;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px;
+    width:46px; height:46px; background:#ffffff; border:none;
+    border-radius:50%; cursor:pointer; box-shadow:0 4px 14px rgba(60,47,34,0.18);
+    transition:background .25s;
+  }
+  @media (max-width:860px){ .menu-btn{top:16px; right:16px;} }
+  .menu-btn span{display:block; width:18px; height:2px; border-radius:1px; background:var(--ink); transition:transform .25s, opacity .25s, background .25s;}
+  .menu-btn.open{background:var(--coral);}
+  .menu-btn.open span{background:#fff;}
+  .menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-btn.open span:nth-child(2){opacity:0;}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-nav{
+    position:fixed; inset:0; z-index:105;
+    background:rgba(255,250,241,0.97); backdrop-filter:blur(6px);
+    display:flex; flex-direction:column; justify-content:center; gap:4px;
+    padding:0 48px;
+    opacity:0; pointer-events:none; transform:translateY(-8px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .mobile-nav.open{opacity:1; pointer-events:auto; transform:none;}
+  .mobile-nav a{
+    font-family:var(--display); font-weight:700; font-size:clamp(1.4rem, 3vw, 1.9rem); text-decoration:none; color:var(--ink);
+    padding:16px 0; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:16px;
+  }
+  .mobile-nav a .idx{font-family:var(--mono); font-size:0.7rem; color:var(--coral-deep);}
+
+  /* ================= Scroll content : each section is its own card,
+     with breathing room on every side so nothing touches the browser edge ================= */
+  .content{
+    padding:64px clamp(24px, 4vw, 64px) 64px 32px;
+    display:flex; flex-direction:column; gap:28px;
+  }
+  @media (max-width:860px){
+    .content{ padding:16px 20px 40px; gap:20px; }
+  }
+
+  .content section{max-width:620px;}
+
+  .section-card{
+    background:var(--bg-card); border-radius:26px; padding:48px 42px;
+    box-shadow:0 16px 40px rgba(60,47,34,0.14);
+  }
+  @media (max-width:860px){
+    .section-card{ padding:32px 24px; border-radius:20px; }
+  }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; color:var(--coral-deep);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:22px; height:2px; border-radius:1px; background:var(--coral-deep);}
+
+  h1.lead-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(1.7rem, 3.2vw, 2.3rem);
+    line-height:1.55; letter-spacing:0.01em;
+  }
+  h1.lead-title .accent{color:var(--coral-deep);}
+
+  h2.sec-title{
+    font-family:var(--display); font-weight:700; font-size:clamp(1.4rem, 2.4vw, 1.7rem);
+    margin-bottom:32px;
+  }
+
+  p.body-text{color:var(--ink-dim); font-size:0.95rem; max-width:56ch;}
+  p.body-text + p.body-text{margin-top:16px;}
+
+  /* ---- Services : flat rows with dividers inside the one card ---- */
+  .service-list{display:flex; flex-direction:column;}
+  .service-row{padding:20px 0; border-bottom:1px solid var(--line);}
+  .service-row:last-child{border-bottom:none; padding-bottom:0;}
+  .service-row:first-child{padding-top:0;}
+  .service-row .name{font-family:var(--display); font-weight:700; font-size:1.05rem;}
+  .service-row .note{
+    font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint);
+    margin-top:8px; line-height:1.6;
+  }
+
+  /* ---- Flow : flat rows with dividers ---- */
+  .flow{display:flex; flex-direction:column;}
+  .flow-step{
+    display:grid; grid-template-columns:44px 1fr; gap:18px; padding:20px 0; align-items:start;
+    border-bottom:1px solid var(--line);
+  }
+  .flow-step:first-child{padding-top:0;}
+  .flow-step:last-child{border-bottom:none; padding-bottom:0;}
+  .flow-step .n{
+    width:36px; height:36px; border-radius:50%; background:var(--coral); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:0.85rem; flex-shrink:0;
+  }
+  .flow-step h3{font-family:var(--display); font-weight:700; font-size:1.02rem; margin-bottom:6px;}
+  .flow-step p{color:var(--ink-dim); font-size:0.88rem;}
+
+  /* ---- Profile (photo + tappable video bubble) ---- */
+  .profile-header{
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    margin:0 auto 32px;
+  }
+  .profile-photo-wrap{position:relative; width:168px; margin-bottom:18px;}
+  .profile-photo{
+    width:168px; height:168px; border-radius:50%; overflow:hidden;
+    background:linear-gradient(145deg, #ffd9a8, #ffb27a);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-weight:700; font-size:2.4rem; color:var(--coral-deep);
+    border:4px solid #fff; box-shadow:0 8px 24px rgba(60,47,34,0.16);
+  }
+  .video-bubble{
+    position:absolute; bottom:-4px; right:-4px; width:64px; height:64px; border-radius:50%;
+    overflow:hidden; border:4px solid #fff; box-shadow:0 6px 16px rgba(60,47,34,0.22);
+    cursor:pointer; background:#000; padding:0;
+    transition:transform .2s;
+  }
+  .video-bubble:hover{transform:scale(1.06);}
+  .video-bubble video{width:100%; height:100%; object-fit:cover; object-position:50% 30%; display:block;}
+  .video-bubble .play-icon{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:0.7rem; background:rgba(0,0,0,0.22);
+  }
+  .profile-header .p-name{font-family:var(--display); font-weight:700; font-size:1.2rem;}
+  .profile-header .p-role{font-family:var(--mono); font-size:0.72rem; color:var(--coral-deep); margin-top:6px; letter-spacing:0.05em;}
+
+  dialog#videoDialog{
+    border:none; border-radius:20px; padding:20px; max-width:420px; width:90%;
+    box-shadow:0 12px 40px rgba(60,47,34,0.25); background:#111;
+  }
+  dialog#videoDialog::backdrop{background:rgba(60,47,34,0.55); backdrop-filter:blur(2px);}
+  dialog#videoDialog video{width:100%; border-radius:12px; display:block; background:#000;}
+  dialog#videoDialog .dialog-close{margin-top:16px; width:100%; justify-content:center; display:flex;}
+
+  .profile-figures{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px;}
+  .pf{background:var(--bg-tile); padding:20px 22px; border-radius:14px; border:1px solid var(--line); text-align:center;}
+  .pf .num{font-family:var(--display); font-weight:900; font-size:1.5rem; color:var(--coral-deep);}
+  .pf .label{margin-top:4px; font-size:0.78rem; color:var(--ink-faint);}
+
+  /* ---- Voice : plain text inside the one card ---- */
+  .voice-box p{color:var(--ink); font-size:1rem; font-weight:500; line-height:1.9;}
+  .voice-box .who{font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint); margin-top:16px;}
+
+  /* ---- FAQ : flat rows with dividers ---- */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-q{
+    padding:20px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+    font-family:var(--display); font-weight:700; font-size:0.98rem; gap:16px; min-height:44px;
+  }
+  .faq-item:first-child .faq-q{padding-top:0;}
+  .faq-q .plus{font-family:var(--mono); color:var(--coral-deep); font-size:1.1rem; transition:transform .3s; flex-shrink:0;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+  .faq-a p{padding:0 0 20px; color:var(--ink-dim); font-size:0.88rem;}
+
+  /* ---- Contact : the section-card itself is the form container ---- */
+  .contact-card p{color:var(--ink-dim); font-size:0.9rem; margin-bottom:26px;}
+  .contact-form{display:flex; flex-direction:column; gap:16px;}
+  .contact-form label{display:flex; flex-direction:column; gap:6px; font-size:0.8rem; color:var(--ink-dim); font-family:var(--mono);}
+  .contact-form input, .contact-form textarea{
+    font-family:var(--sans); font-size:0.9rem; color:var(--ink);
+    background:var(--bg); border:1px solid var(--line); padding:12px 16px;
+    resize:vertical; min-height:44px; border-radius:12px;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{outline:2px solid var(--coral); outline-offset:1px;}
+
+  .consent-row{
+    flex-direction:row !important; align-items:center; gap:10px !important;
+    font-family:var(--sans) !important; font-size:0.85rem !important; color:var(--ink) !important;
+  }
+  .consent-row input[type="checkbox"]{width:20px; height:20px; accent-color:var(--coral); flex-shrink:0;}
+  .privacy-link{
+    background:none; border:none; padding:0; cursor:pointer;
+    color:var(--coral-deep); font-family:var(--sans); font-size:0.85rem; font-weight:700;
+    text-decoration:underline; text-underline-offset:3px;
+  }
+
+  dialog#privacyDialog{
+    border:none; border-radius:20px; padding:32px; max-width:440px; width:90%;
+    box-shadow:0 12px 40px rgba(60,47,34,0.25); color:var(--ink); font-family:var(--sans);
+  }
+  dialog#privacyDialog::backdrop{background:rgba(60,47,34,0.35); backdrop-filter:blur(2px);}
+  dialog#privacyDialog h3{font-family:var(--display); font-weight:700; font-size:1.15rem; margin-bottom:16px;}
+  dialog#privacyDialog .dialog-body p{color:var(--ink-dim); font-size:0.88rem; margin-bottom:12px;}
+  .dialog-close{
+    display:block; margin:8px auto 0; border:none; cursor:pointer;
+    font-family:var(--display); font-weight:700; font-size:0.82rem;
+    color:#fff; background:var(--coral); padding:12px 26px; border-radius:999px;
+  }
+  .contact-form button.btn{
+    border:none; cursor:pointer; margin-top:4px; align-self:center;
+    font-family:var(--display); font-weight:700; font-size:0.85rem; letter-spacing:0.02em;
+    color:#fff; background:var(--coral); padding:16px 32px; border-radius:999px;
+    min-height:44px; box-shadow:0 6px 16px rgba(255,122,89,0.35);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .contact-form button.btn:hover{transform:translateY(-2px); box-shadow:0 10px 20px rgba(255,122,89,0.42);}
+
+  footer.f{
+    padding:8px 4px 0; color:var(--ink-faint); font-size:0.72rem; font-family:var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="layout">
+
+  <!-- ============ Side panel : fixed on desktop, stacks flat on mobile ============ -->
+  <aside class="side-panel">
+    <div class="side-top">
+      <div>
+        <!-- 屋号がある場合は、この行のコメントを外して屋号を入れてください -->
+        <!-- <div class="brand-firm">屋号名</div> -->
+        <div class="side-name">木田 龍介</div>
+        <div class="side-role">WEB PRODUCTION / ウェブ制作</div>
+      </div>
+    </div>
+
+    <div class="side-center">
+      <h2>小さな会社にこそ、<br><em>伝わるサイトを。</em></h2>
+    </div>
+
+    <div class="side-bottom">
+      <p class="side-tagline">企画・デザイン・実装・運用まで、ひとりで対応するウェブ制作者です。</p>
+      <a class="side-btn" href="#contact">無料相談を申し込む<span class="spark">✨</span></a>
+      <div class="sns-row">
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 20v-7h2.5l.5-3H14V8c0-.9.3-1.5 1.7-1.5H17V4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H8v3h2.3v7z" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="note"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h5a2.5 2.5 0 010 5H8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8v9" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </aside>
+
+  <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about"><span class="idx">01</span>はじめに</a>
+    <a href="#services"><span class="idx">02</span>サービス</a>
+    <a href="#flow"><span class="idx">03</span>ご依頼の流れ</a>
+    <a href="#profile"><span class="idx">04</span>プロフィール</a>
+    <a href="#voice"><span class="idx">05</span>お客様の声</a>
+    <a href="#faq"><span class="idx">06</span>よくある質問</a>
+    <a href="#contact"><span class="idx">07</span>お問い合わせ</a>
+  </nav>
+
+  <!-- ============ Scrolling content : each section is one card ============ -->
+  <main class="content">
+
+    <section id="about">
+      <div class="section-card">
+        <div class="eyebrow">はじめに</div>
+        <h1 class="lead-title">
+          機能を絞って、伝わるサイトへ。<br>
+          <span class="accent">運用が続く仕組みをつくります。</span>
+        </h1>
+        <p class="body-text" style="margin-top:24px;">
+          個人事業主・小規模店舗を専門にしているウェブ制作者です。
+          クライアント様のニーズに合わせてワンストップでサービスを提供しております。
+        </p>
+        <p class="body-text">
+          また、使わない無駄な機能を排除することにより、運用側のオペレーション軽減・低価格を実現いたしました。
+        </p>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="section-card">
+        <h2 class="sec-title">サービス</h2>
+        <div class="service-list">
+          <div class="service-row">
+            <div class="name">Webサイト制作</div>
+            <div class="note">企画・デザイン・実装まで一貫対応</div>
+          </div>
+          <div class="service-row">
+            <div class="name">運用・保守サポート</div>
+            <div class="note">更新代行 / 軽微な修正対応</div>
+          </div>
+          <div class="service-row">
+            <div class="name">ワンストップ相談</div>
+            <div class="note">集客・SNS連携なども含めて相談可</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="section-card">
+        <h2 class="sec-title">ご依頼の流れ</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="n">01</div>
+            <div><h3>無料相談(オンライン30分)</h3><p>現状のサイトやご要望をヒアリングします。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="n">02</div>
+            <div><h3>お見積り・ご契約</h3><p>サイト規模に応じたプランをご提示します。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="n">03</div>
+            <div><h3>制作〜公開</h3><p>デザイン確認を重ねながら制作し、公開後も軽くサポートします。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile">
+      <div class="section-card">
+        <h2 class="sec-title">プロフィール</h2>
+
+        <div class="profile-header">
+          <div class="profile-photo-wrap">
+            <div class="profile-photo">木田</div>
+            <button type="button" class="video-bubble" id="videoBubble" aria-label="紹介動画を再生する">
+              <video id="bubbleVideo" muted loop autoplay playsinline></video>
+              <span class="play-icon">▶</span>
+            </button>
+          </div>
+          <div class="p-name">木田 龍介</div>
+          <div class="p-role">WEB PRODUCTION / ウェブ制作</div>
+        </div>
+
+        <p class="body-text">
+          制作会社での勤務を経て独立。飲食店・美容室・士業事務所など、
+          小規模事業者のサイト制作を中心に活動しています。
+        </p>
+        <p class="body-text">
+          「かっこいいサイト」より「更新し続けられるサイト」を大切にしています。
+          打ち合わせでは専門用語をなるべく使わず、疑問に思ったことはその場で質問していただける雰囲気づくりを心がけています。
+        </p>
+
+        <div class="profile-figures">
+          <div class="pf"><div class="num">20年</div><div class="label">Web制作の経験年数</div></div>
+          <div class="pf"><div class="num">500件+</div><div class="label">制作実績</div></div>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="videoDialog">
+      <video id="videoDialogPlayer" controls playsinline></video>
+      <button type="button" class="btn dialog-close" id="videoDialogClose">閉じる</button>
+    </dialog>
+
+    <section id="voice">
+      <div class="section-card">
+        <h2 class="sec-title">お客様の声</h2>
+        <div class="voice-box">
+          <p>更新のたびに業者へ連絡しなくていい仕組みにしてもらえたので、運用が本当に楽になりました。</p>
+          <div class="who">個人経営 美容室オーナー</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-card">
+        <h2 class="sec-title">よくある質問</h2>
+        <div id="faq-list">
+          <div class="faq-item">
+            <div class="faq-q"><span>公開後に自分で更新できますか。</span><span class="plus">＋</span></div>
+            <div class="faq-a"><p>お知らせやブログなど、更新頻度の高い箇所はご自身で編集できる形で制作します。</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span>制作期間はどのくらいですか。</span><span class="plus">＋</span></div>
+            <div class="faq-a"><p>サイトの規模にもよりますが、目安として3〜6週間ほどです。</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span>既存サイトのリニューアルも対応できますか。</span><span class="plus">＋</span></div>
+            <div class="faq-a"><p>可能です。現状のサイトを拝見した上で、改善案をご提案します。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-card contact-card">
+        <h2 class="sec-title">お問い合わせ</h2>
+        <p>30分のオンライン相談で、現状の整理とご提案をいたします。</p>
+        <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <label>お名前<input type="text" name="name" required></label>
+          <label>メールアドレス<input type="email" name="email" required></label>
+          <label>ご相談内容<textarea name="message" rows="4" required></textarea></label>
+          <label class="consent-row">
+            <input type="checkbox" name="agree" required>
+            <span><button type="button" class="privacy-link" id="privacyBtn">個人情報の取り扱い</button>に同意する</span>
+          </label>
+          <button type="submit" class="btn">送信する</button>
+        </form>
+
+        <dialog id="privacyDialog">
+          <h3>個人情報の取り扱いについて</h3>
+          <div class="dialog-body">
+            <p>お問い合わせフォームでご入力いただいた個人情報は、お問い合わせへの回答および必要なご連絡の目的にのみ使用し、
+            ご本人の同意なく第三者へ提供することはありません。</p>
+            <p>お預かりした情報は、目的の達成に必要な期間を過ぎたのち、適切に破棄いたします。
+            開示・訂正・削除等のご希望がある場合は、お問い合わせフォームよりご連絡ください。</p>
+          </div>
+          <button type="button" class="btn dialog-close" id="privacyClose">閉じる</button>
+        </dialog>
+      </div>
+    </section>
+
+    <footer class="f">Copyright © Toshiyuki Miyawaki.</footer>
+
+  </main>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  menuBtn.addEventListener('click', ()=>{
+    const isOpen = menuBtn.classList.toggle('open');
+    mobileNav.classList.toggle('open', isOpen);
+    menuBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      menuBtn.classList.remove('open');
+      mobileNav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // 紹介動画のファイルパスはここ1箇所だけ書き換えればOKです。
+  // 小さいプレビュー(丸バッジ)と拡大表示、どちらも同じファイルを自動で使います。
+  const VIDEO_SRC = 'staff1.mp4';
+  const bubbleVideo = document.getElementById('bubbleVideo');
+  const videoDialogPlayer = document.getElementById('videoDialogPlayer');
+  bubbleVideo.src = VIDEO_SRC;
+  videoDialogPlayer.src = VIDEO_SRC;
+
+  const videoBubble = document.getElementById('videoBubble');
+  const videoDialog = document.getElementById('videoDialog');
+  const videoDialogClose = document.getElementById('videoDialogClose');
+  videoBubble.addEventListener('click', ()=>{
+    videoDialog.showModal();
+    videoDialogPlayer.currentTime = 0;
+    videoDialogPlayer.play();
+  });
+  videoDialogClose.addEventListener('click', ()=>{
+    videoDialogPlayer.pause();
+    videoDialog.close();
+  });
+  videoDialog.addEventListener('click', (e)=>{
+    if(e.target === videoDialog){ videoDialogPlayer.pause(); videoDialog.close(); }
+  });
+
+  const privacyDialog = document.getElementById('privacyDialog');
+  const privacyBtn = document.getElementById('privacyBtn');
+  const privacyClose = document.getElementById('privacyClose');
+  privacyBtn.addEventListener('click', ()=> privacyDialog.showModal());
+  privacyClose.addEventListener('click', ()=> privacyDialog.close());
+  privacyDialog.addEventListener('click', (e)=>{
+    if(e.target === privacyDialog) privacyDialog.close();
+  });
+
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', ()=>{
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o=>{
+        o.classList.remove('open');
+        o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

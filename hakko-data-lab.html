@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>発酵データラボ ｜ 新規事業部門</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0c0904;
+    --bg-soft: #17130a;
+    --bg-card: #1d160c;
+    --line: #3a2c17;
+    --ink: #f4ead2;
+    --ink-dim: #b3a181;
+    --ink-faint: #7a6c52;
+    --koji: #c99a2e;
+    --koji-bright: #e6b93f;
+    --miso: #a3421f;
+    --moss: #5c6b4a;
+    --serif: 'Shippori Mincho', serif;
+    --sans: 'Noto Sans JP', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:linear-gradient(to bottom, rgba(12,9,4,0.92), rgba(12,9,4,0));
+    padding:20px 0;
+  }
+  .header-inner{max-width:1120px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center;}
+  .logo{
+    font-family:var(--serif); font-weight:700; font-size:1.15rem; letter-spacing:0.08em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo-mark{
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--koji-bright), var(--miso));
+  }
+  nav{display:none; gap:32px; font-family:var(--mono); font-size:0.72rem; letter-spacing:0.05em; color:var(--ink-dim);}
+  @media(min-width:860px){ nav{display:flex;} }
+  nav a{text-decoration:none; transition:color .2s;}
+  nav a:hover{color:var(--koji-bright);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:160px 0 100px;
+    background:
+      radial-gradient(ellipse 900px 500px at 80% -10%, rgba(201,154,46,0.18), transparent 60%),
+      radial-gradient(ellipse 700px 400px at 10% 110%, rgba(163,66,31,0.14), transparent 60%),
+      var(--bg);
+  }
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:0.75rem; letter-spacing:0.15em; color:var(--koji-bright);
+    display:flex; align-items:center; gap:12px; margin-bottom:28px;
+  }
+  .hero-eyebrow::before{content:''; width:28px; height:1px; background:var(--koji-bright);}
+  h1.hero-title{
+    font-family:var(--serif); font-weight:800;
+    font-size:clamp(2.6rem, 7vw, 5.6rem);
+    line-height:1.28;
+    letter-spacing:0.02em;
+    max-width:920px;
+  }
+  h1.hero-title .accent{
+    background:linear-gradient(100deg, var(--koji-bright), var(--miso));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{
+    margin-top:28px; max-width:520px; color:var(--ink-dim); font-size:1rem; font-weight:300;
+  }
+  .hero-meta{
+    margin-top:56px; display:flex; gap:40px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:0.72rem; color:var(--ink-faint);
+  }
+  .hero-meta span{color:var(--ink-dim);}
+
+  .fermentation-chart{
+    position:absolute; right:0; bottom:0; width:min(48vw, 620px); opacity:0.85; pointer-events:none;
+  }
+  @media(max-width:760px){ .fermentation-chart{display:none;} }
+
+  /* ---------- Section shell ---------- */
+  section{padding:120px 0; position:relative; border-top:1px solid var(--line);}
+  .lot{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; color:var(--koji);
+    display:flex; align-items:center; gap:10px; margin-bottom:20px;
+  }
+  .lot::before{content:''; width:6px; height:6px; background:var(--koji); border-radius:1px; transform:rotate(45deg);}
+  h2.section-title{
+    font-family:var(--serif); font-weight:700; font-size:clamp(1.8rem,4vw,2.7rem);
+    margin-bottom:44px; letter-spacing:0.02em;
+  }
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid; grid-template-columns:1fr; gap:52px;}
+  @media(min-width:860px){ .about-grid{grid-template-columns:1.1fr 0.9fr;} }
+  .about-lead{font-size:1.05rem; color:var(--ink); font-weight:400;}
+  .about-lead strong{color:var(--koji-bright); font-weight:500;}
+  .about-figures{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .fig{background:var(--bg-soft); padding:28px;}
+  .fig .num{font-family:var(--mono); font-size:2rem; color:var(--koji-bright);}
+  .fig .label{margin-top:6px; font-size:0.8rem; color:var(--ink-faint);}
+
+  /* ---------- Features ---------- */
+  .feature-list{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .feature{
+    background:var(--bg-soft); padding:38px 36px; display:grid; grid-template-columns:100px 1fr; gap:24px; align-items:start;
+  }
+  @media(max-width:640px){ .feature{grid-template-columns:1fr; gap:12px;} }
+  .feature .tag{font-family:var(--mono); font-size:0.75rem; color:var(--ink-faint);}
+  .feature h3{font-family:var(--serif); font-weight:600; font-size:1.25rem; margin-bottom:10px;}
+  .feature p{color:var(--ink-dim); font-size:0.92rem;}
+
+  /* ---------- Services (two divisions) ---------- */
+  .service-grid{display:grid; grid-template-columns:1fr; gap:28px;}
+  @media(min-width:800px){ .service-grid{grid-template-columns:1fr 1fr;} }
+  .service-card{
+    border:1px solid var(--line); background:var(--bg-card); padding:40px 34px; position:relative; overflow:hidden;
+  }
+  .service-card::before{
+    content:''; position:absolute; top:-40%; right:-40%; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, rgba(201,154,46,0.16), transparent 70%);
+  }
+  .service-card h3{font-family:var(--serif); font-size:1.5rem; font-weight:700; margin-bottom:16px;}
+  .service-card p{color:var(--ink-dim); font-size:0.92rem; margin-bottom:20px;}
+  .service-card .stamp{
+    font-family:var(--mono); font-size:0.68rem; color:var(--ink-faint); letter-spacing:0.1em;
+    border-top:1px solid var(--line); padding-top:16px; margin-top:auto;
+  }
+
+  /* ---------- Adopters ---------- */
+  .adopter-grid{display:grid; grid-template-columns:1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  @media(min-width:760px){ .adopter-grid{grid-template-columns:repeat(3,1fr);} }
+  .adopter{background:var(--bg-soft); padding:32px;}
+  .adopter h3{font-family:var(--serif); font-size:1.1rem; margin-bottom:12px;}
+  .adopter p{color:var(--ink-dim); font-size:0.88rem; margin-bottom:16px;}
+  .adopter .examples{font-family:var(--mono); font-size:0.7rem; color:var(--ink-faint); line-height:2;}
+
+  /* ---------- Voices ---------- */
+  .voice-scroll{display:grid; gap:24px;}
+  @media(min-width:760px){ .voice-scroll{grid-template-columns:repeat(3,1fr);} }
+  .voice{background:var(--bg-soft); border:1px solid var(--line); padding:30px; font-size:0.9rem;}
+  .voice p{color:var(--ink); margin-bottom:18px; font-weight:300;}
+  .voice .who{font-family:var(--mono); font-size:0.7rem; color:var(--ink-faint);}
+  .voice .who strong{display:block; color:var(--koji-bright); font-family:var(--sans); font-size:0.85rem; font-weight:500; margin-bottom:4px;}
+
+  /* ---------- News ---------- */
+  .news-list{border-top:1px solid var(--line);}
+  .news-item{
+    display:flex; gap:24px; padding:20px 0; border-bottom:1px solid var(--line);
+    font-size:0.9rem; align-items:baseline; flex-wrap:wrap;
+  }
+  .news-item time{font-family:var(--mono); color:var(--ink-faint); font-size:0.78rem; min-width:96px;}
+  .news-item a{text-decoration:none; color:var(--ink-dim); transition:color .2s;}
+  .news-item a:hover{color:var(--koji-bright);}
+
+  /* ---------- Overview table ---------- */
+  .overview-table{width:100%; border-collapse:collapse;}
+  .overview-table tr{border-bottom:1px solid var(--line);}
+  .overview-table th, .overview-table td{text-align:left; padding:18px 0; vertical-align:top;}
+  .overview-table th{
+    font-family:var(--mono); font-weight:400; font-size:0.75rem; color:var(--ink-faint);
+    width:180px; letter-spacing:0.05em;
+  }
+  .overview-table td{color:var(--ink); font-size:0.92rem;}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    padding:24px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+    font-family:var(--serif); font-size:1.02rem; gap:20px;
+  }
+  .faq-q .plus{font-family:var(--mono); color:var(--koji); font-size:1.2rem; transition:transform .3s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .4s ease;}
+  .faq-a p{padding:0 0 24px; color:var(--ink-dim); font-size:0.9rem; max-width:640px;}
+
+  /* ---------- Contact / footer ---------- */
+  .contact-box{
+    border:1px solid var(--line); padding:56px 40px; text-align:center; background:var(--bg-card);
+  }
+  .contact-box h2{font-family:var(--serif); font-size:1.8rem; margin-bottom:18px;}
+  .contact-box p{color:var(--ink-dim); margin-bottom:32px;}
+  .btn{
+    display:inline-block; font-family:var(--mono); font-size:0.8rem; letter-spacing:0.08em;
+    color:var(--bg); background:var(--koji-bright); padding:16px 36px; text-decoration:none;
+    transition:opacity .2s;
+  }
+  .btn:hover{opacity:0.85;}
+
+  footer{padding:48px 0; text-align:center; color:var(--ink-faint); font-size:0.75rem; font-family:var(--mono); border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo"><span class="logo-mark"></span>発酵データラボ</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">事業内容</a>
+      <a href="#adopters">導入対象</a>
+      <a href="#news">News</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">NEW BUSINESS UNIT / 2027年 始動予定</div>
+    <h1 class="hero-title">発酵を、<span class="accent">データ</span>で読む。<br>勘と経験を、次の世代へ翻訳する。</h1>
+    <p class="hero-sub">麹の温度、微生物の呼吸、蔵人の手の感覚。100年分の暗黙知をセンサーとAIで記録し、発酵食品づくりの再現性と革新性を両立させる新規事業です。</p>
+    <div class="hero-meta">
+      <div>LOT.00 <span>設立準備室</span></div>
+      <div>拠点 <span>長野県 諏訪</span></div>
+      <div>領域 <span>発酵 × データサイエンス</span></div>
+    </div>
+  </div>
+  <svg class="fermentation-chart" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="growthFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e6b93f" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#e6b93f" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="M20,420 C120,410 150,360 200,330 C260,295 300,200 360,150 C420,100 480,80 580,40" fill="none" stroke="#e6b93f" stroke-width="2"/>
+    <path d="M20,420 C120,410 150,360 200,330 C260,295 300,200 360,150 C420,100 480,80 580,40 L580,480 L20,480 Z" fill="url(#growthFill)"/>
+    <g fill="#a3421f" opacity="0.7">
+      <circle cx="120" cy="404" r="3"/>
+      <circle cx="230" cy="318" r="3"/>
+      <circle cx="340" cy="185" r="3"/>
+      <circle cx="460" cy="95" r="3"/>
+      <circle cx="560" cy="48" r="3"/>
+    </g>
+  </svg>
+</section>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="lot">LOT.01 — About</div>
+    <h2 class="section-title">発酵データラボとは</h2>
+    <div class="about-grid">
+      <p class="about-lead">
+        発酵データラボは、味噌・醤油・日本酒などの発酵食品づくりで培われてきた<strong>職人の感覚を定量化</strong>し、
+        品質のばらつきを減らしながら新しい発酵食品の開発速度を上げることを目指す社内新規事業です。
+        蔵付き微生物の挙動や温湿度・仕込み条件をセンサーで記録し、蓄積したデータをもとに発酵の進み方を予測するモデルを開発。
+        職人の経験と、データに基づく判断を掛け合わせることで、これまで属人的だった発酵管理に再現性をもたらします。
+      </p>
+      <div class="about-figures">
+        <div class="fig"><div class="num">120+</div><div class="label">提携蔵元・メーカー数</div></div>
+        <div class="fig"><div class="num">4,800</div><div class="label">記録済み仕込みロット数</div></div>
+        <div class="fig"><div class="num">0.6℃</div><div class="label">温度センサーの検知精度</div></div>
+        <div class="fig"><div class="num">2027</div><div class="label">事業本格始動予定年</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap reveal">
+    <div class="lot">LOT.02 — 事業の特長</div>
+    <h2 class="section-title">3つの特長</h2>
+    <div class="feature-list">
+      <div class="feature">
+        <div class="tag">01 / SENSING</div>
+        <div>
+          <h3>蔵に眠るデータをそのまま活かす仕組み</h3>
+          <p>既存の仕込み蔵に後付けできる小型センサーで、温度・湿度・pH・二酸化炭素濃度を常時記録。蔵の作業フローを変えずにデータ化できます。</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="tag">02 / MODELING</div>
+        <div>
+          <h3>職人の勘を学習した発酵進行予測</h3>
+          <p>ベテラン杜氏・蔵人へのヒアリングをもとに、経験則をモデルの特徴量として組み込み、単なる数値予測ではなく「勘に近い」判断を再現します。</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="tag">03 / CO-CREATION</div>
+        <div>
+          <h3>メーカーとの共同開発型プロジェクト</h3>
+          <p>データ提供のみで終わらせず、新商品開発や品質改善のプロジェクトに伴走。仮説検証を繰り返しながら、現場に定着する形でデータ活用を支援します。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap reveal">
+    <div class="lot">LOT.03 — 事業内容</div>
+    <h2 class="section-title">2つの事業ライン</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>発酵センシング事業</h3>
+        <p>
+          仕込み蔵向けにセンサーキットとダッシュボードを提供。温湿度や発酵進行度をリアルタイムで可視化し、異常の早期発見と職人技の記録・継承を支援します。
+        </p>
+        <div class="stamp">FOR — 蔵元 / 醸造メーカー</div>
+      </div>
+      <div class="service-card">
+        <h3>発酵データコンサルティング事業</h3>
+        <p>
+          蓄積データをもとに、新商品の発酵条件設計や既存商品の品質安定化を支援。研究開発チームと共同で仮説を立て、試作・検証のサイクルを高速化します。
+        </p>
+        <div class="stamp">FOR — 食品メーカー / 商品開発部門</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="adopters">
+  <div class="wrap reveal">
+    <div class="lot">LOT.04 — 想定される導入先</div>
+    <h2 class="section-title">こんな現場での活用を想定</h2>
+    <div class="adopter-grid">
+      <div class="adopter">
+        <h3>伝統的な蔵元・醸造所</h3>
+        <p>杜氏や蔵人の技術継承と、若手育成の効率化を課題とする蔵元での活用を想定。</p>
+        <div class="examples">味噌蔵 / 醤油蔵 / 酒蔵 / 酢醸造所</div>
+      </div>
+      <div class="adopter">
+        <h3>食品メーカーの研究開発部門</h3>
+        <p>新しい発酵食品カテゴリーの立ち上げや、既存商品の品質改善を進める部門での活用を想定。</p>
+        <div class="examples">大手食品メーカー / 飲料メーカー / スタートアップ</div>
+      </div>
+      <div class="adopter">
+        <h3>地域の食産業支援機関</h3>
+        <p>地域特産の発酵食品のブランド化や、生産者支援を行う機関・団体での活用を想定。</p>
+        <div class="examples">地方自治体 / 農業法人 / 商工会</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="wrap reveal">
+    <div class="lot">LOT.05 — 現場からの声</div>
+    <h2 class="section-title">実証実験に参加した方々の声</h2>
+    <div class="voice-scroll">
+      <div class="voice">
+        <p>「温度計を見なくても分かる」と言っていた祖父の感覚が、はじめて数字として残るようになりました。次の世代に技術を渡す自信がつきました。</p>
+        <div class="who"><strong>味噌蔵 五代目蔵元</strong>実証実験参加蔵元</div>
+      </div>
+      <div class="voice">
+        <p>試作にかかる時間が体感で半分近くになりました。仮説を立ててすぐデータで検証できるのは、これまでにない開発の進め方です。</p>
+        <div class="who"><strong>食品メーカー 研究開発担当</strong>共同開発プロジェクト参加者</div>
+      </div>
+      <div class="voice">
+        <p>データを見せることで、若手のスタッフにも発酵の状態を説明しやすくなりました。教育のツールとしても役立っています。</p>
+        <div class="who"><strong>醤油蔵 製造責任者</strong>実証実験参加蔵元</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap reveal">
+    <div class="lot">LOT.06 — News</div>
+    <h2 class="section-title">お知らせ</h2>
+    <div class="news-list">
+      <div class="news-item"><time>2026.07.02</time><a href="#">長野県内の蔵元3社と実証実験の第2フェーズを開始</a></div>
+      <div class="news-item"><time>2026.06.18</time><a href="#">発酵進行予測モデルのβ版精度検証結果を公開</a></div>
+      <div class="news-item"><time>2026.05.30</time><a href="#">食品メーカー向け説明会を開催しました</a></div>
+      <div class="news-item"><time>2026.04.11</time><a href="#">新規事業部門「発酵データラボ」設立準備室を発足</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="wrap reveal">
+    <div class="lot">LOT.07 — 事業概要</div>
+    <h2 class="section-title">事業概要</h2>
+    <table class="overview-table">
+      <tr><th>事業名称</th><td>発酵データラボ（Fermentation Data Lab）</td></tr>
+      <tr><th>事業開始予定</th><td>2027年4月（現在は準備室として実証実験を実施中）</td></tr>
+      <tr><th>拠点</th><td>長野県諏訪郡（醸造の盛んな地域を拠点として選定）</td></tr>
+      <tr><th>主な事業内容</th><td>発酵センシング機器の提供、発酵データ解析・コンサルティング</td></tr>
+      <tr><th>対象業種</th><td>味噌・醤油・日本酒・酢などの醸造業、食品メーカー研究開発部門</td></tr>
+      <tr><th>準備室体制</th><td>12名（データサイエンティスト、醸造技術者、事業開発担当）</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap reveal">
+    <div class="lot">LOT.08 — FAQ</div>
+    <h2 class="section-title">よくある質問</h2>
+    <div id="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span>既存の蔵の作業を変える必要がありますか。</span><span class="plus">＋</span></div>
+        <div class="faq-a"><p>基本的には後付けのセンサー設置のみで導入でき、日々の仕込み作業のやり方を変える必要はありません。データの見方や活用方法については個別にサポートします。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>小規模な蔵元でも導入できますか。</span><span class="plus">＋</span></div>
+        <div class="faq-a"><p>小規模な蔵元向けの簡易プランも準備中です。まずは実証実験としての参加も可能ですので、お気軽にお問い合わせください。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>データの外部提供や共有はされますか。</span><span class="plus">＋</span></div>
+        <div class="faq-a"><p>各蔵元・メーカー様のデータは個別に管理され、本人の同意なく第三者へ提供することはありません。詳細は導入時の契約でご説明します。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>導入までの期間はどのくらいですか。</span><span class="plus">＋</span></div>
+        <div class="faq-a"><p>センサー設置から初期データ収集まで、通常1〜2ヶ月ほどを想定しています。仕込みのサイクルに合わせてスケジュールを調整します。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="lot">LOT.09 — Contact</div>
+    <div class="contact-box">
+      <h2>導入のご相談・実証実験へのご参加</h2>
+      <p>蔵元様、食品メーカー様からのお問い合わせをお待ちしています。</p>
+      <a class="btn" href="#">お問い合わせフォームへ</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Copyright © Fermentation Data Lab. All Rights Reserved.</div>
+</footer>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  // faq toggle
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', ()=>{
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o=>{
+        o.classList.remove('open');
+        o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
